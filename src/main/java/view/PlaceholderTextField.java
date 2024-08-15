@@ -1,4 +1,4 @@
-package views;
+package view;
 
 import javax.swing.JTextField;
 import java.awt.Graphics;

@@ -1,0 +1,118 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author whyia
+ */
+public class Employee {
+    
+    //fields
+    private String id;
+    private String branchId;
+    private String accountId;
+    private Date dateOfBirth;
+    private String gender;
+    private String address;
+    private String email;
+    private String phoneNumber;
+    private String position;
+
+    //constructors
+    public Employee() {
+    }
+
+    public Employee(String id, String branchId, String accountId, Date dateOfBirth, String gender, String address, String email, String phoneNumber, String position) {
+        this.id = id;
+        this.branchId = branchId;
+        this.accountId = accountId;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.position = position;
+    }
+
+    //getters
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBranchId() {
+        return branchId;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+    
+    //setters
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setBranchId(String branchId) {
+        this.branchId = branchId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+    
+}

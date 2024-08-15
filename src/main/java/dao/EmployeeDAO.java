@@ -6,8 +6,8 @@ package dao;
 
 /**
  *
- * @author whyia
+ * @author PC
  */
-public class TaiKhoanDAO {
+public class EmployeeDAO {
     
 }

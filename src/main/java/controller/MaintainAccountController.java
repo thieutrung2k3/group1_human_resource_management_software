@@ -6,8 +6,8 @@ package controller;
 
 /**
  *
- * @author whyia
+ * @author PC
  */
-public class DangNhapController {
+public class MaintainAccountController {
     
 }
