@@ -27,6 +27,7 @@ CREATE TABLE EMPLOYEE (
     email VARCHAR(100) NOT NULL UNIQUE,
     phone_number VARCHAR(20) NOT NULL UNIQUE,
     employee_position VARCHAR(50) NOT NULL,
+    gender ENUM('Nam', 'Nữ') NOT NULL,
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
     FOREIGN KEY (account_id) REFERENCES A_CCOUNT(account_id)
 );
@@ -48,6 +49,7 @@ CREATE TABLE SALARY (
     additional_salary DECIMAL(15, 2) NOT NULL DEFAULT 0,
     deduction DECIMAL(15, 2) NOT NULL DEFAULT 0,
     payment_date DATE NOT NULL,
+    total_salary DECIMAL(15, 2) NOT NULL DEFAULT 0,
     FOREIGN KEY (employee_id) REFERENCES EMPLOYEE(employee_id)
 );
 
