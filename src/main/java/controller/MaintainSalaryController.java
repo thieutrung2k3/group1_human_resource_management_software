@@ -4,10 +4,14 @@
  */
 package controller;
 
+import dao.SalaryDAO;
+
 /**
  *
  * @author PC
  */
 public class MaintainSalaryController {
-    
+    public static boolean deleteSalaryByEmpId(String empId){
+        return SalaryDAO.deleteSalaryByEmpId(empId);
+    }
 }

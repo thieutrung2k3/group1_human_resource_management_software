@@ -9,15 +9,14 @@ package model;
  * @author whyia
  */
 public class Account {
-    
+
     //fields
     private String id;
     private String userName;
     private String password;
     private String accessRight;
-    
-    //constructors
 
+    //constructors
     public Account() {
     }
 
@@ -27,9 +26,8 @@ public class Account {
         this.password = password;
         this.accessRight = accessRight;
     }
-    
-    //getters
 
+    //getters
     public String getId() {
         return id;
     }
@@ -45,9 +43,8 @@ public class Account {
     public String getAccessRight() {
         return accessRight;
     }
-    
-    //setters
 
+    //setters
     public void setId(String id) {
         this.id = id;
     }
@@ -63,5 +60,5 @@ public class Account {
     public void setAccessRight(String accessRight) {
         this.accessRight = accessRight;
     }
-    
+
 }

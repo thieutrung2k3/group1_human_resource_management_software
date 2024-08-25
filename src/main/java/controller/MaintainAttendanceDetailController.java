@@ -4,10 +4,14 @@
  */
 package controller;
 
+import dao.AttendanceDetailDAO;
+
 /**
  *
  * @author PC
  */
 public class MaintainAttendanceDetailController {
-    
+    public static boolean deleteAttendanceDetailByAttendanceId(String empId){
+        return AttendanceDetailDAO.deleteAttendanceDetailByAttendanceId(empId);
+    }
 }

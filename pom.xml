@@ -12,6 +12,13 @@
         <exec.mainClass>com.mycompany.group1_human_resource_management_software.Group1_human_resource_management_software</exec.mainClass>
     </properties>
     
+    <repositories>
+        <repository>
+            <id>jide-repository</id>
+            <url>https://www.brockmann-consult.de/mvn/os/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
@@ -25,6 +32,13 @@
             <groupId>com.toedter</groupId>
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.jidesoft/jide-common -->
+        <dependency>
+            <groupId>com.jidesoft</groupId>
+            <artifactId>jide-common</artifactId>
+            <version>3.6.1</version>
         </dependency>
 
     </dependencies>

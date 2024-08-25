@@ -4,10 +4,20 @@
  */
 package controller;
 
+import dao.AttendanceDAO;
+import java.util.ArrayList;
+import model.Attendance;
+
 /**
  *
  * @author PC
  */
 public class MaintainAttendanceController {
+    public static ArrayList<Attendance> selectAttendanceByEmpId(String empId){
+        return AttendanceDAO.selectAttendanceByEmpId(empId);
+    }
     
+    public static boolean deleteAttendanceByEmpId(String empId){
+        return AttendanceDAO.deleteAttendanceByEmpId(empId);
+    }
 }
