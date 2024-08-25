@@ -67,5 +67,5 @@ CREATE TABLE ATTENDANCE_DETAIL (
     check_out_time TIME,
     attendance_date DATE NOT NULL,
     sta_tus ENUM('Muộn', 'Đúng giờ', 'Nghỉ làm') NOT NULL,
-    FOREIGN KEY (attendance_id) REFERENCES ATTENDANCE(attendance_id)
+    FOREIGN KEY (attendance_id) REFERENCES ATTENDANCE(attendance_id) ON 
 );

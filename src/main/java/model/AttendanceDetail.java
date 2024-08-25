@@ -19,6 +19,7 @@ public class AttendanceDetail {
     private Time checkInTime;
     private Time checkOutTime;
     private Date attendanceDate;
+    private String status;
 
     //constructors
     public AttendanceDetail() {
@@ -30,6 +31,7 @@ public class AttendanceDetail {
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.attendanceDate = attendanceDate;
+        
     }
 
     //getters
@@ -51,6 +53,9 @@ public class AttendanceDetail {
 
     public Date getAttendanceDate() {
         return attendanceDate;
+    }
+    public String getStatus(){
+        return status;
     }
 
     //setters
@@ -74,4 +79,7 @@ public class AttendanceDetail {
         this.attendanceDate = attendanceDate;
     }
 
+    public void setStatus(String status){
+        this.status = status;
+    }
 }

@@ -24,9 +24,9 @@ public class JDBCutil {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
             // Các thông số
-            String url = "jdbc:mySQL://localhost:3806/db_hr_management_fptshop";
+            String url = "jdbc:mySQL://localhost:3306/db_hr_management_fptshop";
             String username = "root";
-            String password = "1234";
+            String password = "root";
 
             // Tạo kết nối
             c = DriverManager.getConnection(url, username, password);
