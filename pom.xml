@@ -38,8 +38,6 @@
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
-<<<<<<< HEAD
-=======
         
         <!-- https://mvnrepository.com/artifact/com.jidesoft/jide-common -->
         <dependency>
@@ -48,7 +46,6 @@
             <version>3.6.1</version>
         </dependency>
 
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     </dependencies>
     
 </project>

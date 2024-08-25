@@ -1,6 +1,5 @@
 package dao;
 
-<<<<<<< HEAD
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,10 +16,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import util.JDBCutil;
 
-/**
- *
- * @author PC
- */
 public class SalaryDAO {
     public static boolean addSalary(Salary salary) {
         String sql = "INSERT INTO SALARY (salary_id, employee_id, base_salary, additional_salary, deduction, total_salary, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -116,13 +111,7 @@ public class SalaryDAO {
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         }
-=======
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import util.JDBCutil;
-
-public class SalaryDAO {
-
+   }
     public static boolean deleteSalaryByEmpId(String empId) {
         boolean salDeleted = false;
         try {
@@ -148,6 +137,5 @@ public class SalaryDAO {
             e.printStackTrace();
         }
         return salDeleted;
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 }

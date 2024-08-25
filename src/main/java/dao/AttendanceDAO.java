@@ -1,14 +1,10 @@
 package dao;
 
-<<<<<<< HEAD
 import com.mysql.cj.xdevapi.PreparableStatement;
-=======
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.*;
@@ -166,21 +162,7 @@ public class AttendanceDAO {
         }
 
         return false;
-    }
-
-
-=======
-import java.util.ArrayList;
-import model.Attendance;
-import model.Employee;
-import util.JDBCutil;
-
-/**
- *
- * @author PC
- */
-public class AttendanceDAO {
-
+}
     public static ArrayList<Attendance> selectAttendanceByEmpId(String empId) {
         ArrayList<Attendance> attList = new ArrayList<>();
         try {
@@ -241,5 +223,4 @@ public class AttendanceDAO {
         }
         return attDeleted;
     }
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
 }

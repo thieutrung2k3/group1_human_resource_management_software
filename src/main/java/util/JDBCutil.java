@@ -16,12 +16,7 @@ public class JDBCutil {
             // Các thông số
             String url = "jdbc:mySQL://localhost:3306/db_hr_management_fptshop";
             String username = "root";
-<<<<<<< HEAD
             String password = "root";
-=======
-            String password = "";
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
-
             // Tạo kết nối
             c = DriverManager.getConnection(url, username, password);
 

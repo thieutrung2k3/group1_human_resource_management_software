@@ -1,21 +1,28 @@
 package view;
 
-<<<<<<< HEAD
 import controller.*;
 import static dao.AttendanceDetailDAO.exportDatabaseToExcel;
 import dao.SalaryDAO;
 import java.io.File;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import model.Account;
 import model.Attendance;
 import model.AttendanceDetail;
+import model.Employee;
 import model.Salary;
+import model.Sale;
+import table_model.*;
 import util.DateUtils;
+import util.*;
+import util.JTextFieldUtil;
 
 public class MaintenanceScreen extends javax.swing.JFrame {
     private static MaintenanceScreen instance;
@@ -23,12 +30,41 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     public MaintainAttendanceDetailScreen detailScreen;
     public static MaintainAttendanceDetailScreen viewDetail;
     public static SalaryCalculationScreen viewSalary;
+    private String branchId;
     public MaintenanceScreen() {
         initComponents();
         MaintainAttendanceController.gI().loadAttendanceData(this);
         MaintainSalaryController.loadSalaryData(this);
     }
-    
+    public MaintenanceScreen(String branchId) {
+        this.branchId = branchId;
+        initComponents();
+        this.jTextFieldAccId.requestFocus();
+        this.jDateChooserEmpDob.getDateEditor().setEnabled(false);
+        this.jDateChooserEmpDob.setDate(new Date(new java.util.Date().getTime()));
+        this.jComboBoxEmpPosition.setSelectedIndex(0);
+        this.jDateChooserStartDate.getDateEditor().setEnabled(false);
+        this.jDateChooserEndDate.getDateEditor().setEnabled(false);
+        this.jDateChooserStartDate.setDate(new Date(new java.util.Date().getTime()));
+        this.jDateChooserEndDate.setDate(new Date(new java.util.Date().getTime()));
+        JTextFieldUtil.formatSaleValue(this.jTextFieldSaleValue);
+        ButtonGroup btnGroupRole = new ButtonGroup();
+        btnGroupRole.add(this.jRadioButtonAdmin);
+        btnGroupRole.add(this.jRadioButtonUser);
+        this.jRadioButtonUser.setSelected(true);
+        ButtonGroup btnGroupGender = new ButtonGroup();
+        btnGroupGender.add(this.jRadioButtonGenderNam);
+        btnGroupGender.add(this.jRadioButtonGenderNu);
+        this.jRadioButtonGenderNam.setSelected(true);
+        ButtonGroup btnGroupSaleStatus = new ButtonGroup();
+        btnGroupSaleStatus.add(this.jRadioButtonStatusDat);
+        btnGroupSaleStatus.add(this.jRadioButtonStatusKhongDat);
+        this.jRadioButtonStatusKhongDat.setSelected(true);
+        JFrameUtil.centerFrame(this);
+        jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+        jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+        jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+    }
     public static MaintenanceScreen gI(){
         if(instance == null){
             instance = new MaintenanceScreen();
@@ -65,79 +101,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 };
                 salary_model.addRow(row);
             }
-=======
-import controller.MaintainAccountController;
-import controller.MaintainBranchController;
-import controller.MaintainEmployeeController;
-import controller.MaintainSaleController;
-import dao.AccountDAO;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.sql.Date;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.table.TableModel;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.DocumentFilter;
-import javax.swing.text.NumberFormatter;
-import javax.swing.text.PlainDocument;
-import model.Account;
-import model.Branch;
-import model.Employee;
-import model.Sale;
-import table_model.AccountTableModel;
-import table_model.EmployeeTableModel;
-import table_model.SaleTableModel;
-import util.JFrameUtil;
-import util.JTableUtil;
-import util.JTextFieldUtil;
-
-public class MaintenanceScreen extends javax.swing.JFrame {
-
-    //fields
-    private String branchId;
-
-    //constructors
-    public MaintenanceScreen(String branchId) {
-        this.branchId = branchId;
-        initComponents();
-        this.jTextFieldAccId.requestFocus();
-        this.jDateChooserEmpDob.getDateEditor().setEnabled(false);
-        this.jDateChooserEmpDob.setDate(new Date(new java.util.Date().getTime()));
-        this.jComboBoxEmpPosition.setSelectedIndex(0);
-        this.jDateChooserStartDate.getDateEditor().setEnabled(false);
-        this.jDateChooserEndDate.getDateEditor().setEnabled(false);
-        this.jDateChooserStartDate.setDate(new Date(new java.util.Date().getTime()));
-        this.jDateChooserEndDate.setDate(new Date(new java.util.Date().getTime()));
-        JTextFieldUtil.formatSaleValue(this.jTextFieldSaleValue);
-        ButtonGroup btnGroupRole = new ButtonGroup();
-        btnGroupRole.add(this.jRadioButtonAdmin);
-        btnGroupRole.add(this.jRadioButtonUser);
-        this.jRadioButtonUser.setSelected(true);
-        ButtonGroup btnGroupGender = new ButtonGroup();
-        btnGroupGender.add(this.jRadioButtonGenderNam);
-        btnGroupGender.add(this.jRadioButtonGenderNu);
-        this.jRadioButtonGenderNam.setSelected(true);
-        ButtonGroup btnGroupSaleStatus = new ButtonGroup();
-        btnGroupSaleStatus.add(this.jRadioButtonStatusDat);
-        btnGroupSaleStatus.add(this.jRadioButtonStatusKhongDat);
-        this.jRadioButtonStatusKhongDat.setSelected(true);
-        JFrameUtil.centerFrame(this);
-        jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
-        jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
-        jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 
     public String getSelectedRowAttendanceId(){
@@ -1024,12 +987,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton13)))
-<<<<<<< HEAD
-                .addContainerGap(222, Short.MAX_VALUE))
-=======
-                .addContainerGap(509, Short.MAX_VALUE))
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
-        );
+                .addContainerGap(509, Short.MAX_VALUE)));
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -1181,7 +1139,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< HEAD
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         viewSalary = new SalaryCalculationScreen();
         viewSalary.setVisible(true);
@@ -1212,7 +1169,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton10ActionPerformed
-=======
+
     //event handling methods
     private void jButtonDelEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDelEmpActionPerformed
         // TODO add your handling code here:
@@ -1290,7 +1247,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_jTabbedPaneMaintainScreenMouseClicked
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
+
 
     private void jButtonAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddAccountActionPerformed
         // TODO add your handling code here:
@@ -1428,7 +1385,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         this.jTextFieldAccId.requestFocus();
     }//GEN-LAST:event_jButtonInputNewAccountActionPerformed
 
-<<<<<<< HEAD
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         InputDialog inputDialog = new InputDialog("NHẬP THÔNG TIN CHẤM CÔNG", 1);
         inputDialog.setVisible(true);
@@ -1466,7 +1422,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     
-=======
     private void jButtonUpdateEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateEmpActionPerformed
         // TODO add your handling code here:
         if (!JTableUtil.isARowSelected(this.jTableEmpList)) {
@@ -1749,7 +1704,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }
 
     //entry point of this JFrame
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     public static void main(String args[]) {
         /* Set the System look and feel */
         try {
@@ -1761,23 +1715,16 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-<<<<<<< HEAD
                 view = new MaintenanceScreen();
                 view.setVisible(true);
-=======
-                new MaintenanceScreen("BR01").setVisible(true);
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
     private javax.swing.JTable attendance_table;
     private javax.swing.JLabel countLabel;
     private javax.swing.JButton jButton1;
-=======
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1844,7 +1791,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-<<<<<<< HEAD
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -1857,7 +1803,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTable salary_table;
-=======
     private javax.swing.JTabbedPane jTabbedPaneMaintainScreen;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
@@ -1877,6 +1822,5 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldSaleId;
     private javax.swing.JTextField jTextFieldSaleValue;
     private javax.swing.JTextField jTextFieldUserName;
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     // End of variables declaration//GEN-END:variables
 }

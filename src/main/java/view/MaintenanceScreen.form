@@ -1184,11 +1184,9 @@
                               <Component id="jButton13" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-<<<<<<< HEAD
+
                       <EmptySpace pref="222" max="32767" attributes="0"/>
-=======
                       <EmptySpace pref="509" max="32767" attributes="0"/>
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
                   </Group>
               </Group>
             </DimensionLayout>

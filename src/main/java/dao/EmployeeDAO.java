@@ -1,11 +1,13 @@
 package dao;
 
 import java.sql.Connection;
-<<<<<<< HEAD
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import model.Employee;
 import util.JDBCutil;
 
 public class EmployeeDAO {
@@ -31,18 +33,7 @@ public class EmployeeDAO {
             e.printStackTrace();
         }
         return employees;
-=======
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import model.Account;
-import model.Employee;
-import util.JDBCutil;
-
-public class EmployeeDAO {
+}
 
     public static ArrayList<Employee> selectEmpsByBranch(String branchId) {
         ArrayList<Employee> empList = new ArrayList();
@@ -318,6 +309,5 @@ public class EmployeeDAO {
             e.printStackTrace();
         }
         return empDeleted;
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 }

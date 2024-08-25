@@ -1,11 +1,9 @@
 package dao;
 
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileInputStream;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,15 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Attendance;
 import model.AttendanceDetail;
 import util.DateUtils;
 import util.JDBCutil;
 import util.TimeUtils;
 
-/**
- *
- * @author PC
- */
+
 public class AttendanceDetailDAO {
     public static List<AttendanceDetail> getAllAttendanceDetailByAttendanceId(String id) {
         List<AttendanceDetail> attendanceDetails = new ArrayList<>();
@@ -236,15 +232,7 @@ public class AttendanceDetailDAO {
         } catch (SQLException e) {
             System.out.println("SQL Exception: " + e.getMessage());
         }
-=======
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import model.Attendance;
-import util.JDBCutil;
-
-public class AttendanceDetailDAO {
-
+    }
     public static boolean deleteAttendanceDetailByAttendanceId(String empId) {
         boolean detailDeleted = false;
         ArrayList<Attendance> attList = AttendanceDAO.selectAttendanceByEmpId(empId);
@@ -274,6 +262,5 @@ public class AttendanceDetailDAO {
             e.printStackTrace();
         }
         return detailDeleted;
->>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 }
