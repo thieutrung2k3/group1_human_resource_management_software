@@ -11,36 +11,37 @@ import java.sql.Date;
  * @author whyia
  */
 public class Employee {
-    
+
     //fields
     private String id;
     private String branchId;
     private String accountId;
+    private String fullName;
     private Date dateOfBirth;
-    private String gender;
     private String address;
     private String email;
     private String phoneNumber;
     private String position;
+    private String gender;
 
     //constructors
     public Employee() {
     }
 
-    public Employee(String id, String branchId, String accountId, Date dateOfBirth, String gender, String address, String email, String phoneNumber, String position) {
+    public Employee(String id, String branchId, String accountId, String fullName, Date dateOfBirth, String address, String email, String phoneNumber, String position, String gender) {
         this.id = id;
         this.branchId = branchId;
         this.accountId = accountId;
+        this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.position = position;
+        this.gender = gender;
     }
 
     //getters
-
     public String getId() {
         return id;
     }
@@ -53,12 +54,12 @@ public class Employee {
         return accountId;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public String getFullName() {
+        return fullName;
     }
 
-    public String getGender() {
-        return gender;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public String getAddress() {
@@ -76,9 +77,12 @@ public class Employee {
     public String getPosition() {
         return position;
     }
-    
-    //setters
 
+    public String getGender() {
+        return gender;
+    }
+
+    //setters
     public void setId(String id) {
         this.id = id;
     }
@@ -91,12 +95,12 @@ public class Employee {
         this.accountId = accountId;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public void setAddress(String address) {
@@ -114,5 +118,9 @@ public class Employee {
     public void setPosition(String position) {
         this.position = position;
     }
-    
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 }

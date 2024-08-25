@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
+<<<<<<< HEAD
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -119,5 +116,38 @@ public class SalaryDAO {
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         }
+=======
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import util.JDBCutil;
+
+public class SalaryDAO {
+
+    public static boolean deleteSalaryByEmpId(String empId) {
+        boolean salDeleted = false;
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection con = JDBCutil.getConnection();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "delete from salary where employee_id = ?;";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, empId);
+
+            // Bước 3: thực thi câu lệnh SQL
+            int affectedRowNumber = st.executeUpdate();
+
+            // Bước 4: xử lý kết quả nhận được
+            if (affectedRowNumber > 0) {
+                salDeleted = true;
+            }
+
+            // Bước 5: đóng kết nối
+            JDBCutil.closeConnection(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return salDeleted;
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 }

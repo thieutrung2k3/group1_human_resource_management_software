@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AttendanceDAO;
+<<<<<<< HEAD
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -49,5 +50,21 @@ public class MaintainAttendanceController {
     public boolean deleteAttendance(String id){
         int i = AttendanceDAO.gI().deleteAttendance(id);
         return (i != 0);
+=======
+import java.util.ArrayList;
+import model.Attendance;
+
+/**
+ *
+ * @author PC
+ */
+public class MaintainAttendanceController {
+    public static ArrayList<Attendance> selectAttendanceByEmpId(String empId){
+        return AttendanceDAO.selectAttendanceByEmpId(empId);
+    }
+    
+    public static boolean deleteAttendanceByEmpId(String empId){
+        return AttendanceDAO.deleteAttendanceByEmpId(empId);
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 }

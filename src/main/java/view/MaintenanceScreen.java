@@ -1,5 +1,6 @@
 package view;
 
+<<<<<<< HEAD
 import controller.*;
 import static dao.AttendanceDetailDAO.exportDatabaseToExcel;
 import dao.SalaryDAO;
@@ -64,6 +65,79 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 };
                 salary_model.addRow(row);
             }
+=======
+import controller.MaintainAccountController;
+import controller.MaintainBranchController;
+import controller.MaintainEmployeeController;
+import controller.MaintainSaleController;
+import dao.AccountDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.sql.Date;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.table.TableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
+import javax.swing.text.PlainDocument;
+import model.Account;
+import model.Branch;
+import model.Employee;
+import model.Sale;
+import table_model.AccountTableModel;
+import table_model.EmployeeTableModel;
+import table_model.SaleTableModel;
+import util.JFrameUtil;
+import util.JTableUtil;
+import util.JTextFieldUtil;
+
+public class MaintenanceScreen extends javax.swing.JFrame {
+
+    //fields
+    private String branchId;
+
+    //constructors
+    public MaintenanceScreen(String branchId) {
+        this.branchId = branchId;
+        initComponents();
+        this.jTextFieldAccId.requestFocus();
+        this.jDateChooserEmpDob.getDateEditor().setEnabled(false);
+        this.jDateChooserEmpDob.setDate(new Date(new java.util.Date().getTime()));
+        this.jComboBoxEmpPosition.setSelectedIndex(0);
+        this.jDateChooserStartDate.getDateEditor().setEnabled(false);
+        this.jDateChooserEndDate.getDateEditor().setEnabled(false);
+        this.jDateChooserStartDate.setDate(new Date(new java.util.Date().getTime()));
+        this.jDateChooserEndDate.setDate(new Date(new java.util.Date().getTime()));
+        JTextFieldUtil.formatSaleValue(this.jTextFieldSaleValue);
+        ButtonGroup btnGroupRole = new ButtonGroup();
+        btnGroupRole.add(this.jRadioButtonAdmin);
+        btnGroupRole.add(this.jRadioButtonUser);
+        this.jRadioButtonUser.setSelected(true);
+        ButtonGroup btnGroupGender = new ButtonGroup();
+        btnGroupGender.add(this.jRadioButtonGenderNam);
+        btnGroupGender.add(this.jRadioButtonGenderNu);
+        this.jRadioButtonGenderNam.setSelected(true);
+        ButtonGroup btnGroupSaleStatus = new ButtonGroup();
+        btnGroupSaleStatus.add(this.jRadioButtonStatusDat);
+        btnGroupSaleStatus.add(this.jRadioButtonStatusKhongDat);
+        this.jRadioButtonStatusKhongDat.setSelected(true);
+        JFrameUtil.centerFrame(this);
+        jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+        jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+        jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     }
 
     public String getSelectedRowAttendanceId(){
@@ -94,70 +168,75 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jTabbedPaneMaintainScreen = new javax.swing.JTabbedPane();
+        jPanelMaintainAccount = new javax.swing.JPanel();
+        jLabelAdminTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jTableAccountList = new javax.swing.JTable();
+        jLabelAccountId = new javax.swing.JLabel();
+        jLabelUserName = new javax.swing.JLabel();
+        jLabelPassword = new javax.swing.JLabel();
+        jLabelAccessRight = new javax.swing.JLabel();
+        jTextFieldUserName = new javax.swing.JTextField();
+        jTextFieldPassword = new javax.swing.JTextField();
+        jRadioButtonAdmin = new javax.swing.JRadioButton();
+        jRadioButtonUser = new javax.swing.JRadioButton();
+        jButtonAddAccount = new javax.swing.JButton();
+        jButtonUpdateAccount = new javax.swing.JButton();
+        jButtonDeleteAccount = new javax.swing.JButton();
+        jTextFieldAccId = new javax.swing.JTextField();
+        jButtonInputNewAccount = new javax.swing.JButton();
+        jPanelMaintainEmployee = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableEmpList = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jTextFieldEmpName = new javax.swing.JTextField();
+        jRadioButtonGenderNam = new javax.swing.JRadioButton();
+        jRadioButtonGenderNu = new javax.swing.JRadioButton();
+        jButtonAddEmp = new javax.swing.JButton();
+        jButtonUpdateEmp = new javax.swing.JButton();
+        jButtonDelEmp = new javax.swing.JButton();
+        jDateChooserEmpDob = new com.toedter.calendar.JDateChooser();
         jLabel13 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldEmpAddress = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldEmpPhoneNo = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        jTextFieldEmpEmail = new javax.swing.JTextField();
+        jComboBoxEmpPosition = new javax.swing.JComboBox<>();
+        jTextFieldEmpId = new javax.swing.JTextField();
+        jTextFieldJPanelMaintainEmployeeAccId = new javax.swing.JTextField();
+        jTextFieldJPanelMaintainEmployeeBranchId = new javax.swing.JTextField();
+        jButtonInputNewEmp = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTableSaleList = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        jButtonAddSale = new javax.swing.JButton();
+        jButtonUpdateSale = new javax.swing.JButton();
+        jButtonDeleteSale = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
-        jRadioButton10 = new javax.swing.JRadioButton();
-        jRadioButton11 = new javax.swing.JRadioButton();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jRadioButtonStatusDat = new javax.swing.JRadioButton();
+        jRadioButtonStatusKhongDat = new javax.swing.JRadioButton();
+        jDateChooserEndDate = new com.toedter.calendar.JDateChooser();
+        jDateChooserStartDate = new com.toedter.calendar.JDateChooser();
+        jTextFieldSaleId = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jTextFieldMaintainSaleBranchId = new javax.swing.JTextField();
+        jButtonInputNewSale = new javax.swing.JButton();
+        jTextFieldSaleValue = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
@@ -179,218 +258,218 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BẢO TRÌ");
 
-        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTabbedPaneMaintainScreen.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPaneMaintainScreen.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTabbedPaneMaintainScreen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPaneMaintainScreenMouseClicked(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("QUẢN TRỊ VIÊN");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabelAdminTitle.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabelAdminTitle.setText("QUẢN TRỊ VIÊN");
+        jLabelAdminTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAccountList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableAccountList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Mã tài khoản", "Tên người dùng", "Mật khẩu", "Quyền truy cập"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            }
+        ));
+        jTableAccountList.getTableHeader().setReorderingAllowed(false);
+        jTableAccountList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableAccountListMouseClicked(evt);
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-        }
+        jScrollPane1.setViewportView(jTableAccountList);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("Mã tài khoản:");
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabelAccountId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelAccountId.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelAccountId.setText("Mã tài khoản:");
+        jLabelAccountId.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel3.setText("Tên người dùng:");
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabelUserName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelUserName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelUserName.setText("Tên người dùng:");
+        jLabelUserName.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel4.setText("Mật khẩu:");
-        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabelPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelPassword.setText("Mật khẩu:");
+        jLabelPassword.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel5.setText("Quyền truy cập:");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabelAccessRight.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelAccessRight.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelAccessRight.setText("Quyền truy cập:");
+        jLabelAccessRight.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("account_id");
-        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jTextFieldUserName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldUserName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldPassword.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jRadioButtonAdmin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButtonAdmin.setText("Aministrator");
+        jRadioButtonAdmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton2.setText("Aministrator");
-        jRadioButton2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadioButtonUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButtonUser.setText("User");
+        jRadioButtonUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jRadioButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton3.setText("User");
-        jRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setText("THÊM");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton2.setText("SỬA");
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton3.setText("XÓA");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonAddAccount.setText("THÊM");
+        jButtonAddAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAddAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonAddAccountActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jButtonUpdateAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonUpdateAccount.setText("SỬA");
+        jButtonUpdateAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonUpdateAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateAccountActionPerformed(evt);
+            }
+        });
+
+        jButtonDeleteAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonDeleteAccount.setText("XÓA");
+        jButtonDeleteAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonDeleteAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteAccountActionPerformed(evt);
+            }
+        });
+
+        jTextFieldAccId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldAccId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jButtonInputNewAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonInputNewAccount.setText("NHẬP MỚI");
+        jButtonInputNewAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonInputNewAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInputNewAccountActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelMaintainAccountLayout = new javax.swing.GroupLayout(jPanelMaintainAccount);
+        jPanelMaintainAccount.setLayout(jPanelMaintainAccountLayout);
+        jPanelMaintainAccountLayout.setHorizontalGroup(
+            jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                         .addGap(334, 334, 334)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelAdminTitle))
+                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelAccountId)
+                            .addComponent(jLabelPassword)
+                            .addComponent(jLabelAccessRight)
+                            .addComponent(jLabelUserName))
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                        .addComponent(jRadioButtonAdmin)
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jRadioButton2)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jRadioButton3))))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(51, 51, 51)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(502, Short.MAX_VALUE))
+                                        .addComponent(jRadioButtonUser))))
+                            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMaintainAccountLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonDeleteAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAddAccount))
+                        .addGap(33, 33, 33)
+                        .addComponent(jButtonInputNewAccount)))
+                .addContainerGap(453, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelMaintainAccountLayout.setVerticalGroup(
+            jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                .addComponent(jLabelAdminTitle)
+                .addGap(2, 2, 2)
+                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelAccountId)
+                            .addComponent(jTextFieldAccId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelUserName)
+                            .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelPassword)
+                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jButton1))
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelAccessRight)
+                            .addComponent(jRadioButtonAdmin)
+                            .addComponent(jRadioButtonUser)))
+                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAddAccount)
+                            .addComponent(jButtonInputNewAccount))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonUpdateAccount)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)))
+                        .addComponent(jButtonDeleteAccount)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("TÀI KHOẢN", jPanel1);
+        jTabbedPaneMaintainScreen.addTab("TÀI KHOẢN", jPanelMaintainAccount);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel7.setText("QUẢN TRỊ VIÊN");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jTable2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEmpList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableEmpList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Mã nhân viên", "Họ tên", "Ngày sinh", "Giới tính", "Địa chỉ", "Email", "Điện thoại", "Chức vụ", "Mã tài khoản", "Mã cơ sở"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            }
+        ));
+        jTableEmpList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableEmpList.setShowGrid(true);
+        jTableEmpList.getTableHeader().setReorderingAllowed(false);
+        jTableEmpList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableEmpListMouseClicked(evt);
             }
         });
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-            jTable2.getColumnModel().getColumn(2).setResizable(false);
-            jTable2.getColumnModel().getColumn(3).setResizable(false);
-            jTable2.getColumnModel().getColumn(4).setResizable(false);
-            jTable2.getColumnModel().getColumn(5).setResizable(false);
-            jTable2.getColumnModel().getColumn(6).setResizable(false);
-            jTable2.getColumnModel().getColumn(6).setHeaderValue("Điện thoại");
-            jTable2.getColumnModel().getColumn(7).setResizable(false);
-            jTable2.getColumnModel().getColumn(7).setHeaderValue("Chức vụ");
-            jTable2.getColumnModel().getColumn(8).setResizable(false);
-            jTable2.getColumnModel().getColumn(8).setHeaderValue("Mã tài khoản");
-            jTable2.getColumnModel().getColumn(9).setResizable(false);
-            jTable2.getColumnModel().getColumn(9).setHeaderValue("Mã cơ sở");
-        }
+        jScrollPane2.setViewportView(jTableEmpList);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -412,49 +491,54 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabel11.setText("Giới tính:");
         jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel12.setText("emp_id");
-        jLabel12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jTextFieldEmpName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldEmpName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jRadioButtonGenderNam.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButtonGenderNam.setText("Nam");
+        jRadioButtonGenderNam.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jRadioButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton4.setText("Nam");
-        jRadioButton4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadioButtonGenderNu.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButtonGenderNu.setText("Nữ");
+        jRadioButtonGenderNu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jRadioButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton5.setText("Nữ");
-        jRadioButton5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton4.setText("THÊM");
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton5.setText("SỬA");
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton6.setText("XÓA");
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddEmp.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonAddEmp.setText("THÊM");
+        jButtonAddEmp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAddEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButtonAddEmpActionPerformed(evt);
             }
         });
 
-        jDateChooser1.setDateFormatString("dd-MM-yyyy");
-        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonUpdateEmp.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonUpdateEmp.setText("SỬA");
+        jButtonUpdateEmp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonUpdateEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateEmpActionPerformed(evt);
+            }
+        });
+
+        jButtonDelEmp.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonDelEmp.setText("XÓA");
+        jButtonDelEmp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonDelEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDelEmpActionPerformed(evt);
+            }
+        });
+
+        jDateChooserEmpDob.setDateFormatString("dd-MM-yyyy");
+        jDateChooserEmpDob.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel13.setText("Địa chỉ:");
         jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldEmpAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldEmpAddress.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -466,8 +550,8 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabel16.setText("Điện thoại:");
         jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldEmpPhoneNo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldEmpPhoneNo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -484,176 +568,172 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabel19.setText("Mã cơ sở:");
         jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldEmpEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldEmpEmail.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Saler", "Manager" }));
+        jComboBoxEmpPosition.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBoxEmpPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên bán hàng", "Quản lý" }));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel15.setText("account_id");
-        jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jTextFieldEmpId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldEmpId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel20.setText("branch_id");
-        jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jTextFieldJPanelMaintainEmployeeAccId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldJPanelMaintainEmployeeAccId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jTextFieldJPanelMaintainEmployeeBranchId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldJPanelMaintainEmployeeBranchId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jButtonInputNewEmp.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonInputNewEmp.setText("NHẬP MỚI");
+        jButtonInputNewEmp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonInputNewEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInputNewEmpActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelMaintainEmployeeLayout = new javax.swing.GroupLayout(jPanelMaintainEmployee);
+        jPanelMaintainEmployee.setLayout(jPanelMaintainEmployeeLayout);
+        jPanelMaintainEmployeeLayout.setHorizontalGroup(
+            jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel10)
                             .addComponent(jLabel9)
                             .addComponent(jLabel11)
                             .addComponent(jLabel13))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                .addComponent(jTextFieldEmpId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(63, 63, 63)
+                                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldEmpEmail)
+                                            .addComponent(jTextFieldEmpPhoneNo)
+                                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jComboBoxEmpPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jTextFieldJPanelMaintainEmployeeAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jTextFieldJPanelMaintainEmployeeBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(2, 2, 2)))
+                                        .addGap(29, 29, 29)
+                                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButtonUpdateEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButtonAddEmp, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButtonDelEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                .addComponent(jTextFieldEmpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel12))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel19))
+                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateChooserEmpDob, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel19))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel17)
-                                            .addComponent(jLabel16)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jRadioButton4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton5)
-                                        .addGap(108, 108, 108)
-                                        .addComponent(jLabel18)))))
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel16)))
+                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                .addComponent(jRadioButtonGenderNam)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButtonGenderNu)
+                                .addGap(108, 108, 108)
+                                .addComponent(jLabel18)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel20))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(336, 336, 336)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(356, Short.MAX_VALUE))
+                        .addComponent(jButtonInputNewEmp)
+                        .addContainerGap(210, Short.MAX_VALUE))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelMaintainEmployeeLayout.setVerticalGroup(
+            jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel7)
                 .addGap(2, 2, 2)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
+                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel14)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldEmpEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldEmpId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldEmpName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel16)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldEmpPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel17)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jDateChooserEmpDob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxEmpPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)))
+                            .addComponent(jLabel17))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton5)
+                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButtonGenderNam)
+                            .addComponent(jRadioButtonGenderNu)
                             .addComponent(jLabel18)
-                            .addComponent(jLabel15))
+                            .addComponent(jTextFieldJPanelMaintainEmployeeAccId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldEmpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19)
-                            .addComponent(jLabel20)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jTextFieldJPanelMaintainEmployeeBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)))
+                    .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel13))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(jLabel10))
+                    .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAddEmp)
+                            .addComponent(jButtonInputNewEmp))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
+                        .addComponent(jButtonUpdateEmp)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                        .addComponent(jButtonDelEmp)))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("NHÂN VIÊN", jPanel2);
+        jTabbedPaneMaintainScreen.addTab("NHÂN VIÊN", jPanelMaintainEmployee);
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel21.setText("QUẢN TRỊ VIÊN");
         jLabel21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jTable3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSaleList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableSaleList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Mã doanh số", "Chỉ tiêu", "Ngày bắt đầu tính:", "Ngày kết thúc", "Trạng thái"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            }
+        ));
+        jTableSaleList.getTableHeader().setReorderingAllowed(false);
+        jTableSaleList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSaleListMouseClicked(evt);
             }
         });
-        jTable3.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setResizable(false);
-            jTable3.getColumnModel().getColumn(2).setResizable(false);
-            jTable3.getColumnModel().getColumn(3).setResizable(false);
-            jTable3.getColumnModel().getColumn(4).setResizable(false);
-        }
+        jScrollPane3.setViewportView(jTableSaleList);
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -675,28 +755,30 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabel25.setText("Ngày kết thúc:");
         jLabel25.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel26.setText("sale_id");
-        jLabel26.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton7.setText("THÊM");
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton8.setText("SỬA");
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButton9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton9.setText("XÓA");
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddSale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonAddSale.setText("THÊM");
+        jButtonAddSale.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAddSale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                jButtonAddSaleActionPerformed(evt);
+            }
+        });
+
+        jButtonUpdateSale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonUpdateSale.setText("SỬA");
+        jButtonUpdateSale.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonUpdateSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateSaleActionPerformed(evt);
+            }
+        });
+
+        jButtonDeleteSale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonDeleteSale.setText("XÓA");
+        jButtonDeleteSale.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonDeleteSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteSaleActionPerformed(evt);
             }
         });
 
@@ -705,106 +787,136 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabel27.setText("Trạng thái:");
         jLabel27.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jRadioButton10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton10.setText("Đạt");
-        jRadioButton10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jRadioButton10.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonStatusDat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButtonStatusDat.setText("Đạt");
+        jRadioButtonStatusDat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jRadioButtonStatusKhongDat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButtonStatusKhongDat.setText("Không đạt");
+        jRadioButtonStatusKhongDat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jDateChooserEndDate.setDateFormatString("dd-MM-yyyy");
+        jDateChooserEndDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jDateChooserStartDate.setDateFormatString("dd-MM-yyyy");
+        jDateChooserStartDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jTextFieldSaleId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldSaleId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel26.setText("Mã cơ sở:");
+        jLabel26.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        jTextFieldMaintainSaleBranchId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldMaintainSaleBranchId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jButtonInputNewSale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButtonInputNewSale.setText("NHẬP MỚI");
+        jButtonInputNewSale.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonInputNewSale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton10ActionPerformed(evt);
+                jButtonInputNewSaleActionPerformed(evt);
             }
         });
 
-        jRadioButton11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jRadioButton11.setText("Không đạt");
-        jRadioButton11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jRadioButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton11ActionPerformed(evt);
-            }
-        });
-
-        jDateChooser2.setDateFormatString("dd-MM-yyyy");
-        jDateChooser2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jDateChooser3.setDateFormatString("dd-MM-yyyy");
-        jDateChooser3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldSaleValue.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldSaleValue.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel27))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel25)
-                            .addComponent(jLabel27))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel26)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(jRadioButton10)
+                                .addComponent(jTextFieldSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton11)))
-                        .addGap(56, 56, 56)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel21)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                        .addComponent(jLabel26)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldMaintainSaleBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(jRadioButtonStatusDat)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jRadioButtonStatusKhongDat))
+                                    .addComponent(jDateChooserStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateChooserEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addComponent(jLabel21)))
-                .addContainerGap(477, Short.MAX_VALUE))
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jTextFieldSaleValue, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAddSale, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonUpdateSale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonDeleteSale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonInputNewSale)
+                .addGap(244, 244, 244))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1084, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel21)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addComponent(jLabel25)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel27))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel8Layout.createSequentialGroup()
-                                        .addComponent(jLabel22)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel23)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel24))
-                                    .addGroup(jPanel8Layout.createSequentialGroup()
-                                        .addComponent(jLabel26)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRadioButton10)
-                                    .addComponent(jRadioButton11)))))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7)
+                        .addComponent(jLabel27))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel23)
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel24))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jTextFieldSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldSaleValue, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jDateChooserStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateChooserEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButtonStatusDat)
+                            .addComponent(jRadioButtonStatusKhongDat)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAddSale)
+                            .addComponent(jButtonInputNewSale))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8)
+                        .addComponent(jButtonUpdateSale)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton9)))
+                        .addComponent(jButtonDeleteSale))
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldMaintainSaleBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel26)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addContainerGap())
@@ -814,24 +926,20 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1103, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(0, 12, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 13, Short.MAX_VALUE)))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("DOANH SỐ", jPanel3);
+        jTabbedPaneMaintainScreen.addTab("DOANH SỐ", jPanel3);
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel28.setText("QUẢN TRỊ VIÊN");
@@ -840,11 +948,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton10.setText("XÓA");
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
 
         jButton11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton11.setText("SỬA");
@@ -895,11 +998,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jButton13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton13.setText("CHI TIẾT");
         jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
 
         countLabel.setText("Count: ");
 
@@ -926,7 +1024,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton13)))
+<<<<<<< HEAD
                 .addContainerGap(222, Short.MAX_VALUE))
+=======
+                .addContainerGap(509, Short.MAX_VALUE))
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -942,11 +1044,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                     .addComponent(jButton10)
                     .addComponent(jButton13))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("CHẤM CÔNG", jPanel4);
+        jTabbedPaneMaintainScreen.addTab("CHẤM CÔNG", jPanel4);
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel29.setText("QUẢN TRỊ VIÊN");
@@ -995,11 +1097,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jButton16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton16.setText("TÍNH LƯƠNG");
         jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1018,7 +1115,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                         .addComponent(jButton14)
                         .addGap(18, 18, 18)
                         .addComponent(jButton16)))
-                .addContainerGap(500, Short.MAX_VALUE))
+                .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1030,37 +1127,39 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                     .addComponent(jButton14)
                     .addComponent(jButton16))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("LƯƠNG", jPanel5);
+        jTabbedPaneMaintainScreen.addTab("LƯƠNG", jPanel5);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1103, Short.MAX_VALUE)
+            .addGap(0, 1112, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("QUAY VỀ", jPanel7);
+        jTabbedPaneMaintainScreen.addTab("QUAY VỀ", jPanel7);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1103, Short.MAX_VALUE)
+            .addGap(0, 1112, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("ĐĂNG XUẤT", jPanel9);
+        jTabbedPaneMaintainScreen.addTab("ĐĂNG XUẤT", jPanel9);
+
+        jTabbedPaneMaintainScreen.setSelectedComponent(jPanelMaintainAccount);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1068,20 +1167,21 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPaneMaintainScreen)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPaneMaintainScreen)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         viewSalary = new SalaryCalculationScreen();
         viewSalary.setVisible(true);
@@ -1112,27 +1212,223 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jRadioButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton11ActionPerformed
+=======
+    //event handling methods
+    private void jButtonDelEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDelEmpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton11ActionPerformed
+        if (!JTableUtil.isARowSelected(this.jTableEmpList)) {
+            return;
+        }
 
-    private void jRadioButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton10ActionPerformed
+        String empId = this.jTextFieldEmpId.getText();
+
+        int result = JOptionPane.showConfirmDialog(null, "Delete this employee will also delete his/her:\n"
+                + "1. Account\n"
+                + "2. Attendance\n"
+                + "3. Attendance details\n"
+                + "4. Salary", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            if (MaintainEmployeeController.deleteEmployeeById(empId)) {
+                JOptionPane.showMessageDialog(null, "Employee deleted successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+            } else {
+                JOptionPane.showMessageDialog(null, "Employee not deleted!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            // Người dùng chọn No
+        }
+    }//GEN-LAST:event_jButtonDelEmpActionPerformed
+
+    private void jButtonDeleteAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteAccountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton10ActionPerformed
+        if (!JTableUtil.isARowSelected(this.jTableAccountList)) {
+            return;
+        }
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        String accId = this.jTextFieldAccId.getText();
+        String userName = this.jTextFieldUserName.getText();
+        String password = this.jTextFieldPassword.getText();
+        String accessRight;
+        if (this.jRadioButtonAdmin.isSelected()) {
+            accessRight = "Admin";
+        } else {
+            accessRight = this.jRadioButtonUser.getText();
+        }
+
+        Account acc = new Account(accId, userName, password, accessRight);
+
+        int result = JOptionPane.showConfirmDialog(null, "Deleting this account will also delete:\n"
+                + "1. The employee who is its owner\n"
+                + "2. His/her attendance\n"
+                + "3. His/her attendance detail\n"
+                + "4. His/her salary", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            if (MaintainAccountController.deleteAccountById(acc)) {
+                JOptionPane.showMessageDialog(null, "Account deleted successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+            } else {
+                JOptionPane.showMessageDialog(null, "Account not deleted!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            // Người dùng chọn No
+        }
+    }//GEN-LAST:event_jButtonDeleteAccountActionPerformed
+
+    private void jTabbedPaneMaintainScreenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPaneMaintainScreenMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        switch (this.jTabbedPaneMaintainScreen.getSelectedIndex()) {
+            case 0:
+                this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+                break;
+            case 1:
+                jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+                break;
+            case 2:
+                jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_jTabbedPaneMaintainScreenMouseClicked
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButtonAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddAccountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        if (isAccInfoEmpty()) {
+            return;
+        } else if (JTextFieldUtil.isAccIdExisted(this.jTextFieldAccId)) {
+            return;
+        } else if (JTextFieldUtil.isUserNameExisted(this.jTextFieldUserName)) {
+            return;
+        }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String accId = this.jTextFieldAccId.getText();
+        String userName = this.jTextFieldUserName.getText();
+        String password = this.jTextFieldPassword.getText();
+        String accessRight;
+        if (this.jRadioButtonAdmin.isSelected()) {
+            accessRight = this.jRadioButtonAdmin.getText();
+        } else {
+            accessRight = this.jRadioButtonUser.getText();
+        }
+
+        Account acc = new Account(accId, userName, password, accessRight);
+
+        if (MaintainAccountController.insertAccount(acc)) {
+            JOptionPane.showMessageDialog(null, "Account inserted successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+        } else {
+            JOptionPane.showMessageDialog(null, "Account not inserted!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonAddAccountActionPerformed
+
+    private void jTableAccountListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAccountListMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        int selectedRowIndex = this.jTableAccountList.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            String accId = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 0);
+            String userName = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 1);
+            String password = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 2);
+            String accessRight = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 3);
 
+            this.jTextFieldAccId.setEditable(false);
+            this.jTextFieldAccId.setText(accId);
+            this.jTextFieldUserName.setText(userName);
+            this.jTextFieldPassword.setText(password);
+            if (accessRight.equals(this.jRadioButtonAdmin.getText())) {
+                this.jRadioButtonAdmin.setSelected(true);
+            } else {
+                this.jRadioButtonUser.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_jTableAccountListMouseClicked
+
+    private void jButtonUpdateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateAccountActionPerformed
+        // TODO add your handling code here:
+        if (!JTableUtil.isARowSelected(this.jTableAccountList)) {
+            return;
+        } else if (JTextFieldUtil.isUserNameExisted(this.jTextFieldUserName)) {
+            return;
+        }
+
+        String accId = this.jTextFieldAccId.getText();
+        String userName = this.jTextFieldUserName.getText();
+        String password = this.jTextFieldPassword.getText();
+        String accessRight;
+        if (this.jRadioButtonAdmin.isSelected()) {
+            accessRight = "Admin";
+        } else {
+            accessRight = this.jRadioButtonUser.getText();
+        }
+
+        Account acc = new Account(accId, userName, password, accessRight);
+
+        int result = JOptionPane.showConfirmDialog(null, "Update this account", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            if (MaintainAccountController.updateAccountById(acc)) {
+                JOptionPane.showMessageDialog(null, "Account updated successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+            } else {
+                JOptionPane.showMessageDialog(null, "Account not updated!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            // Người dùng chọn No
+        }
+    }//GEN-LAST:event_jButtonUpdateAccountActionPerformed
+
+    private void jButtonAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEmpActionPerformed
+        // TODO add your handling code here:
+        if (isEmpInfoEmpty()) {
+            return;
+        } else if (JTextFieldUtil.isEmpIdExisted(this.jTextFieldEmpId)) {
+            return;
+        } else if (JTextFieldUtil.isEmpEmailExisted(this.jTextFieldEmpEmail)) {
+            return;
+        } else if (JTextFieldUtil.isPhoneNumberExisted(this.jTextFieldEmpPhoneNo)) {
+            return;
+        } else if (JTextFieldUtil.isAccNotExisted(this.jTextFieldJPanelMaintainEmployeeAccId)) {
+            return;
+        } else if (JTextFieldUtil.isBranchNotExisted(this.jTextFieldJPanelMaintainEmployeeBranchId)) {
+            return;
+        }
+
+        String empId = this.jTextFieldEmpId.getText();
+        String branch_id = this.jTextFieldJPanelMaintainEmployeeBranchId.getText();
+        String accountId = this.jTextFieldJPanelMaintainEmployeeAccId.getText();
+        String fullName = this.jTextFieldEmpName.getText();
+        Date dateOfBirth = new Date(this.jDateChooserEmpDob.getDate().getTime());
+        String empAddress = this.jTextFieldEmpAddress.getText();
+        String empEmail = this.jTextFieldEmpEmail.getText();
+        String phoneNumber = this.jTextFieldEmpPhoneNo.getText();
+        String empPosition = (String) this.jComboBoxEmpPosition.getSelectedItem();
+        String empGender;
+        if (this.jRadioButtonGenderNam.isSelected()) {
+            empGender = this.jRadioButtonGenderNam.getText();
+        } else {
+            empGender = this.jRadioButtonGenderNu.getText();
+        }
+
+        Employee emp = new Employee(empId, branch_id, accountId, fullName, dateOfBirth, empAddress, empEmail, phoneNumber, empPosition, empGender);
+        if (MaintainEmployeeController.insertEmployee(emp)) {
+            JOptionPane.showMessageDialog(null, "Employee inserted successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            this.jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+        } else {
+            JOptionPane.showMessageDialog(null, "Employee not inserted!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonAddEmpActionPerformed
+
+    private void jButtonInputNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInputNewAccountActionPerformed
+        // TODO add your handling code here:
+        this.jTextFieldAccId.setText("");
+        this.jTextFieldUserName.setText("");
+        this.jTextFieldPassword.setText("");
+        this.jRadioButtonUser.setSelected(true);
+        this.jRadioButtonAdmin.setSelected(false);
+        this.jTextFieldAccId.setEditable(true);
+        this.jTextFieldAccId.requestFocus();
+    }//GEN-LAST:event_jButtonInputNewAccountActionPerformed
+
+<<<<<<< HEAD
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         InputDialog inputDialog = new InputDialog("NHẬP THÔNG TIN CHẤM CÔNG", 1);
         inputDialog.setVisible(true);
@@ -1170,58 +1466,348 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     
+=======
+    private void jButtonUpdateEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateEmpActionPerformed
+        // TODO add your handling code here:
+        if (!JTableUtil.isARowSelected(this.jTableEmpList)) {
+            return;
+        } else if (isEmpInfoEmpty()) {
+            return;
+        } else if (JTextFieldUtil.isEmpEmailExisted(this.jTextFieldEmpEmail)) {
+            return;
+        } else if (JTextFieldUtil.isPhoneNumberExisted(this.jTextFieldEmpEmail)) {
+            return;
+        } else if (JTextFieldUtil.isAccNotExisted(this.jTextFieldJPanelMaintainEmployeeAccId)) {
+            return;
+        } else if (JTextFieldUtil.isBranchNotExisted(this.jTextFieldJPanelMaintainEmployeeBranchId)) {
+            return;
+        }
+
+        String empId = this.jTextFieldEmpId.getText();
+        String branch_id = this.jTextFieldJPanelMaintainEmployeeBranchId.getText();
+        String accountId = this.jTextFieldJPanelMaintainEmployeeAccId.getText();
+        String fullName = this.jTextFieldEmpName.getText();
+        Date dateOfBirth = new Date(this.jDateChooserEmpDob.getDate().getTime());
+        String empAddress = this.jTextFieldEmpAddress.getText();
+        String empEmail = this.jTextFieldEmpEmail.getText();
+        String phoneNumber = this.jTextFieldEmpPhoneNo.getText();
+        String empPosition = (String) this.jComboBoxEmpPosition.getSelectedItem();
+        String empGender;
+        if (this.jRadioButtonGenderNam.isSelected()) {
+            empGender = this.jRadioButtonGenderNam.getText();
+        } else {
+            empGender = this.jRadioButtonGenderNu.getText();
+        }
+
+        Employee emp = new Employee(empId, branch_id, accountId, fullName, dateOfBirth, empAddress, empEmail, phoneNumber, empPosition, empGender);
+
+        int result = JOptionPane.showConfirmDialog(null, "Update this employee?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            if (MaintainEmployeeController.updateEmployeeById(emp)) {
+                JOptionPane.showMessageDialog(null, "Employee updated successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+            } else {
+                JOptionPane.showMessageDialog(null, "Employee not updated!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            // Người dùng chọn No
+        }
+    }//GEN-LAST:event_jButtonUpdateEmpActionPerformed
+
+    private void jTableEmpListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEmpListMouseClicked
+        // TODO add your handling code here:
+        int selectedRowIndex = this.jTableEmpList.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            String empId = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 0);
+            String branch_id = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 1);
+            String accId = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 2);
+            String empName = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 3);
+            Date empDob = (Date) this.jTableEmpList.getValueAt(selectedRowIndex, 4);
+            String empAddress = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 5);
+            String empEmail = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 6);
+            String empPhoneNumber = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 7);
+            String empPosition = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 8);
+            String empGender = (String) this.jTableEmpList.getValueAt(selectedRowIndex, 9);
+
+            this.jTextFieldEmpId.setText(empId);
+            this.jTextFieldEmpId.setEditable(false);
+            this.jTextFieldEmpName.setText(empName);
+            this.jDateChooserEmpDob.setDate(empDob);
+            if (empGender.equals(this.jRadioButtonGenderNam.getText())) {
+                this.jRadioButtonGenderNam.setSelected(true);
+            } else {
+                this.jRadioButtonGenderNu.setSelected(true);
+            }
+            this.jTextFieldEmpAddress.setText(empAddress);
+            this.jTextFieldEmpEmail.setText(empEmail);
+            this.jTextFieldEmpPhoneNo.setText(empPhoneNumber);
+            this.jComboBoxEmpPosition.setSelectedItem(empPosition);
+            this.jTextFieldJPanelMaintainEmployeeAccId.setText(accId);
+            this.jTextFieldJPanelMaintainEmployeeBranchId.setText(branch_id);
+        }
+    }//GEN-LAST:event_jTableEmpListMouseClicked
+
+    private void jButtonInputNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInputNewEmpActionPerformed
+        // TODO add your handling code here:
+        this.jTextFieldEmpId.setEditable(true);
+        this.jTextFieldEmpId.setText("");
+        this.jTextFieldEmpName.setText("");
+        this.jDateChooserEmpDob.setDate(new Date(new java.util.Date().getTime()));
+        this.jTextFieldEmpAddress.setText("");
+        this.jTextFieldEmpEmail.setText("");
+        this.jTextFieldEmpPhoneNo.setText("");
+        this.jComboBoxEmpPosition.setSelectedIndex(0);
+        this.jTextFieldJPanelMaintainEmployeeAccId.setText("");
+        this.jTextFieldJPanelMaintainEmployeeBranchId.setText("");
+    }//GEN-LAST:event_jButtonInputNewEmpActionPerformed
+
+    private void jButtonDeleteSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteSaleActionPerformed
+        // TODO add your handling code here:
+        if (!JTableUtil.isARowSelected(this.jTableSaleList)) {
+            return;
+        }
+
+        String saleId = this.jTextFieldSaleId.getText();
+        Sale sale = new Sale();
+        sale.setId(saleId);
+
+        int result = JOptionPane.showConfirmDialog(null, "Delete this sale?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            if (MaintainSaleController.deleteSaleById(sale)) {
+                JOptionPane.showMessageDialog(null, "Sale deleted successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                this.jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+            } else {
+                JOptionPane.showMessageDialog(null, "Employee not deleted!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            // Người dùng chọn No
+        }
+    }//GEN-LAST:event_jButtonDeleteSaleActionPerformed
+
+    private void jTableSaleListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSaleListMouseClicked
+        // TODO add your handling code here:
+        int selectedRowIndex = this.jTableSaleList.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            String saleId = (String) this.jTableSaleList.getValueAt(selectedRowIndex, 0);
+            String branch_id = (String) this.jTableSaleList.getValueAt(selectedRowIndex, 1);
+            String targetValue = this.jTableSaleList.getValueAt(selectedRowIndex, 2).toString();
+            Date startDate = (Date) this.jTableSaleList.getValueAt(selectedRowIndex, 3);
+            Date endDate = (Date) this.jTableSaleList.getValueAt(selectedRowIndex, 4);
+            String status = (String) this.jTableSaleList.getValueAt(selectedRowIndex, 5);
+
+            this.jTextFieldSaleId.setText(saleId);
+            this.jTextFieldSaleId.setEditable(false);
+            this.jTextFieldMaintainSaleBranchId.setText(branch_id);
+            this.jTextFieldSaleValue.setText(targetValue);
+            this.jDateChooserStartDate.setDate(startDate);
+            this.jDateChooserEndDate.setDate(endDate);
+            if (status.equals(this.jRadioButtonStatusDat.getText())) {
+                this.jRadioButtonStatusDat.setSelected(true);
+            } else {
+                this.jRadioButtonStatusKhongDat.setSelected(false);
+            }
+        }
+    }//GEN-LAST:event_jTableSaleListMouseClicked
+
+    private void jButtonInputNewSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInputNewSaleActionPerformed
+        // TODO add your handling code here:
+        this.jTextFieldSaleId.setEditable(true);
+        this.jTextFieldSaleId.setText("");
+        this.jTextFieldMaintainSaleBranchId.setText("");
+        this.jTextFieldSaleValue.setText("");
+        this.jDateChooserStartDate.setDate(new Date(new java.util.Date().getTime()));
+        this.jDateChooserEndDate.setDate(new Date(new java.util.Date().getTime()));
+        this.jRadioButtonStatusKhongDat.setSelected(true);
+    }//GEN-LAST:event_jButtonInputNewSaleActionPerformed
+
+    private void jButtonAddSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddSaleActionPerformed
+        // TODO add your handling code here:
+        if (isSaleInfoEmpty()) {
+            return;
+        } else if (JTextFieldUtil.isSaleIdExisted(this.jTextFieldSaleId)) {
+            return;
+        } else if (JTextFieldUtil.isBranchNotExisted(this.jTextFieldMaintainSaleBranchId)) {
+            return;
+        }
+
+        String saleId = this.jTextFieldSaleId.getText();
+        String branch_id = this.jTextFieldMaintainSaleBranchId.getText();
+        int saleValue = Integer.valueOf(this.jTextFieldSaleValue.getText()).intValue();
+        Date startDate = new Date(this.jDateChooserStartDate.getDate().getTime());
+        Date endDate = new Date(this.jDateChooserEndDate.getDate().getTime());
+        String status = "";
+        if (this.jRadioButtonStatusDat.isSelected()) {
+            status = this.jRadioButtonStatusDat.getText();
+        } else {
+            status = this.jRadioButtonStatusKhongDat.getText();
+        }
+
+        Sale sale = new Sale(saleId, branch_id, saleValue, startDate, endDate, status);
+
+        if (MaintainSaleController.insertSale(sale)) {
+            JOptionPane.showMessageDialog(null, "Sale inserted successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            this.jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+        } else {
+            JOptionPane.showMessageDialog(null, "Sale not inserted!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonAddSaleActionPerformed
+
+    private void jButtonUpdateSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateSaleActionPerformed
+        // TODO add your handling code here:
+        if (!JTableUtil.isARowSelected(this.jTableSaleList)) {
+            return;
+        } else if (isSaleInfoEmpty()) {
+            return;
+        } else if (JTextFieldUtil.isBranchNotExisted(this.jTextFieldMaintainSaleBranchId)) {
+            return;
+        }
+
+        String saleId = this.jTextFieldSaleId.getText();
+        String branch_id = this.jTextFieldMaintainSaleBranchId.getText();
+        int saleValue = Integer.valueOf(this.jTextFieldSaleValue.getText()).intValue();
+        Date startDate = new Date(this.jDateChooserStartDate.getDate().getTime());
+        Date endDate = new Date(this.jDateChooserEndDate.getDate().getTime());
+        String status = "";
+        if (this.jRadioButtonStatusDat.isSelected()) {
+            status = this.jRadioButtonStatusDat.getText();
+        } else {
+            status = this.jRadioButtonStatusKhongDat.getText();
+        }
+
+        Sale sale = new Sale(saleId, branch_id, saleValue, startDate, endDate, status);
+
+        if (MaintainSaleController.updateSaleById(sale)) {
+            JOptionPane.showMessageDialog(null, "Sale updated successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            this.jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+        } else {
+            JOptionPane.showMessageDialog(null, "Sale not updated!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonUpdateSaleActionPerformed
+
+    //utility methods
+    private boolean isAccInfoEmpty() {
+        boolean isEmpty = false;
+
+        if (this.jTextFieldAccId.getText().trim().replaceAll("\\s+", "").equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Account id is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldUserName.getText().trim().replaceAll("\\s+", "").equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "User name is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldPassword.getText().trim().replaceAll("\\s+", "").equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Password is required", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return isEmpty;
+    }
+
+    private boolean isEmpInfoEmpty() {
+        boolean isEmpty = false;
+
+        if (this.jTextFieldEmpId.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Employee id is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldEmpName.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Employee name is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jDateChooserEmpDob.getDate() == null) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Employee date of birth is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldEmpAddress.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Employee address is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldEmpEmail.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Employee email is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldEmpPhoneNo.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Employee phone number is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldJPanelMaintainEmployeeAccId.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Account id is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldJPanelMaintainEmployeeBranchId.getText().equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Branch id is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return isEmpty;
+    }
+
+    private boolean isSaleInfoEmpty() {
+        boolean isEmpty = false;
+        if (this.jTextFieldSaleId.getText().trim().replaceAll("\\s+", "").equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Sale id is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldSaleValue.getText().trim().replaceAll("\\s+", "").equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Sale value is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.jTextFieldMaintainSaleBranchId.getText().trim().replaceAll("\\s+", "").equals("")) {
+            isEmpty = true;
+            JOptionPane.showMessageDialog(null, "Branch id is required!", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return isEmpty;
+    }
+
+    //entry point of this JFrame
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     public static void main(String args[]) {
         /* Set the System look and feel */
-        try{
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+<<<<<<< HEAD
                 view = new MaintenanceScreen();
                 view.setVisible(true);
+=======
+                new MaintenanceScreen("BR01").setVisible(true);
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JTable attendance_table;
     private javax.swing.JLabel countLabel;
     private javax.swing.JButton jButton1;
+=======
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButtonAddAccount;
+    private javax.swing.JButton jButtonAddEmp;
+    private javax.swing.JButton jButtonAddSale;
+    private javax.swing.JButton jButtonDelEmp;
+    private javax.swing.JButton jButtonDeleteAccount;
+    private javax.swing.JButton jButtonDeleteSale;
+    private javax.swing.JButton jButtonInputNewAccount;
+    private javax.swing.JButton jButtonInputNewEmp;
+    private javax.swing.JButton jButtonInputNewSale;
+    private javax.swing.JButton jButtonUpdateAccount;
+    private javax.swing.JButton jButtonUpdateEmp;
+    private javax.swing.JButton jButtonUpdateSale;
+    private javax.swing.JComboBox<String> jComboBoxEmpPosition;
+    private com.toedter.calendar.JDateChooser jDateChooserEmpDob;
+    private com.toedter.calendar.JDateChooser jDateChooserEndDate;
+    private com.toedter.calendar.JDateChooser jDateChooserStartDate;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -1231,32 +1817,34 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabelAccessRight;
+    private javax.swing.JLabel jLabelAccountId;
+    private javax.swing.JLabel jLabelAdminTitle;
+    private javax.swing.JLabel jLabelPassword;
+    private javax.swing.JLabel jLabelUserName;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton11;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JPanel jPanelMaintainAccount;
+    private javax.swing.JPanel jPanelMaintainEmployee;
+    private javax.swing.JRadioButton jRadioButtonAdmin;
+    private javax.swing.JRadioButton jRadioButtonGenderNam;
+    private javax.swing.JRadioButton jRadioButtonGenderNu;
+    private javax.swing.JRadioButton jRadioButtonStatusDat;
+    private javax.swing.JRadioButton jRadioButtonStatusKhongDat;
+    private javax.swing.JRadioButton jRadioButtonUser;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+<<<<<<< HEAD
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -1269,5 +1857,26 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTable salary_table;
+=======
+    private javax.swing.JTabbedPane jTabbedPaneMaintainScreen;
+    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable5;
+    private javax.swing.JTable jTableAccountList;
+    private javax.swing.JTable jTableEmpList;
+    private javax.swing.JTable jTableSaleList;
+    private javax.swing.JTextField jTextFieldAccId;
+    private javax.swing.JTextField jTextFieldEmpAddress;
+    private javax.swing.JTextField jTextFieldEmpEmail;
+    private javax.swing.JTextField jTextFieldEmpId;
+    private javax.swing.JTextField jTextFieldEmpName;
+    private javax.swing.JTextField jTextFieldEmpPhoneNo;
+    private javax.swing.JTextField jTextFieldJPanelMaintainEmployeeAccId;
+    private javax.swing.JTextField jTextFieldJPanelMaintainEmployeeBranchId;
+    private javax.swing.JTextField jTextFieldMaintainSaleBranchId;
+    private javax.swing.JTextField jTextFieldPassword;
+    private javax.swing.JTextField jTextFieldSaleId;
+    private javax.swing.JTextField jTextFieldSaleValue;
+    private javax.swing.JTextField jTextFieldUserName;
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
     // End of variables declaration//GEN-END:variables
 }

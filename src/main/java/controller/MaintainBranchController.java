@@ -4,10 +4,16 @@
  */
 package controller;
 
+import dao.BranchDAO;
+import model.Branch;
+
 /**
  *
  * @author PC
  */
 public class MaintainBranchController {
     
+    public static Branch selectBranchById(String branchId){
+        return BranchDAO.selectBranchById(branchId);
+    }
 }

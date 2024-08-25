@@ -26,10 +26,10 @@ CREATE TABLE EMPLOYEE (
     emp_address VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone_number VARCHAR(20) NOT NULL UNIQUE,
-    employee_position VARCHAR(50) NOT NULL,
+    employee_position ENUM('Quản lý', 'Nhân viên bán hàng') NOT NULL,
     gender ENUM('Nam', 'Nữ') NOT NULL,
-    FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
-    FOREIGN KEY (account_id) REFERENCES A_CCOUNT(account_id)
+    FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id) ON DELETE CASCADE,
+    FOREIGN KEY (account_id) REFERENCES A_CCOUNT(account_id) ON DELETE CASCADE
 );
 
 CREATE TABLE SALE (
@@ -39,7 +39,7 @@ CREATE TABLE SALE (
     start_time DATE NOT NULL,
     deadline DATE NOT NULL,
     sta_tus ENUM('Đạt', 'Không đạt') NOT NULL,
-    FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id)
+    FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id) ON DELETE CASCADE
 );
 
 CREATE TABLE SALARY (
@@ -50,14 +50,14 @@ CREATE TABLE SALARY (
     deduction DECIMAL(15, 2) NOT NULL DEFAULT 0,
     payment_date DATE NOT NULL,
     total_salary DECIMAL(15, 2) NOT NULL DEFAULT 0,
-    FOREIGN KEY (employee_id) REFERENCES EMPLOYEE(employee_id)
+    FOREIGN KEY (employee_id) REFERENCES EMPLOYEE(employee_id) ON DELETE CASCADE
 );
 
 CREATE TABLE ATTENDANCE (
     attendance_id VARCHAR(10) PRIMARY KEY NOT NULL,
     employee_id VARCHAR(10) NOT NULL,
     created_date DATE NOT NULL,
-    FOREIGN KEY (employee_id) REFERENCES EMPLOYEE(employee_id)
+    FOREIGN KEY (employee_id) REFERENCES EMPLOYEE(employee_id) ON DELETE CASCADE
 );
 
 CREATE TABLE ATTENDANCE_DETAIL (
@@ -67,5 +67,9 @@ CREATE TABLE ATTENDANCE_DETAIL (
     check_out_time TIME,
     attendance_date DATE NOT NULL,
     sta_tus ENUM('Muộn', 'Đúng giờ', 'Nghỉ làm') NOT NULL,
+<<<<<<< HEAD
     FOREIGN KEY (attendance_id) REFERENCES ATTENDANCE(attendance_id) ON 
+=======
+    FOREIGN KEY (attendance_id) REFERENCES ATTENDANCE(attendance_id) ON DELETE CASCADE
+>>>>>>> fe132b85f9b069f5bad73c2ec51caf371970f06b
 );
