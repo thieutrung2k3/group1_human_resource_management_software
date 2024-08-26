@@ -18,7 +18,37 @@ import org.apache.xmlbeans.impl.regex.REUtil;
 import util.JDBCutil;
 
 public class SalaryDAO {
+    public static List<Salary> getAllSalariesByEmpIdAndDateRange(String empId, Date startDate, Date endDate) {
+    String sql = "SELECT * FROM SALARY WHERE employee_id = ? AND payment_date BETWEEN ? AND ?";
+    List<Salary> salaries = new ArrayList<>();
     
+    try (Connection connection = JDBCutil.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        
+        preparedStatement.setString(1, empId);
+        preparedStatement.setDate(2, startDate);
+        preparedStatement.setDate(3, endDate);
+        
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                Salary salary = new Salary();
+                salary.setId(resultSet.getString("salary_id"));
+                salary.setEmpId(resultSet.getString("employee_id"));
+                salary.setBaseSalary((int)resultSet.getDouble("base_salary"));
+                salary.setAdditionalSalary((int)resultSet.getDouble("additional_salary"));
+                salary.setDeduction((int)resultSet.getDouble("deduction"));
+                salary.setTotalSalary((int)resultSet.getDouble("total_salary"));
+                salary.setPaymentDate(resultSet.getDate("payment_date"));
+                salaries.add(salary);
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error in getAllSalariesByEmpIdAndDateRange: " + e);
+    }
+    
+    return salaries;
+}
+
     public static List<Salary> getAllSalariesByEmpId(String empId){
         String sql = "SELECT * FROM SALARY WHERE employee_id = ?";
         List<Salary> salaries = new ArrayList<>();

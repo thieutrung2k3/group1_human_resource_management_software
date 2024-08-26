@@ -15,7 +15,12 @@ import model.Branch;
 import model.*;
 import controller.*;
 import dao.AccountDAO;
+import dao.AttendanceDAO;
+import dao.AttendanceDetailDAO;
+import dao.SalaryDAO;
+import java.sql.Date;
 import javax.swing.JOptionPane;
+import util.DateUtils;
 
 /**
  *
@@ -117,17 +122,17 @@ public class EmployeeScreen extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         attendance_table = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        attendanceStart = new com.toedter.calendar.JDateChooser();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        attendanceEnd = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        salaryStart = new com.toedter.calendar.JDateChooser();
         jLabel19 = new javax.swing.JLabel();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        salaryEnd = new com.toedter.calendar.JDateChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         salary_table = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
@@ -323,8 +328,8 @@ public class EmployeeScreen extends javax.swing.JFrame {
             attendance_table.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jDateChooser1.setDateFormatString("dd-MM-yyyy");
-        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        attendanceStart.setDateFormatString("dd-MM-yyyy");
+        attendanceStart.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -336,12 +341,17 @@ public class EmployeeScreen extends javax.swing.JFrame {
         jLabel16.setText("Ngày kết thúc:");
         jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jDateChooser2.setDateFormatString("dd-MM-yyyy");
-        jDateChooser2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        attendanceEnd.setDateFormatString("dd-MM-yyyy");
+        attendanceEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton2.setText("XEM");
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -353,11 +363,11 @@ public class EmployeeScreen extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addGap(18, 18, 18)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(attendanceStart, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16)
                         .addGap(18, 18, 18)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(attendanceEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addContainerGap(79, Short.MAX_VALUE))
@@ -375,9 +385,9 @@ public class EmployeeScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attendanceStart, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attendanceEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
@@ -396,16 +406,16 @@ public class EmployeeScreen extends javax.swing.JFrame {
         jLabel18.setText("Ngày bắt đầu:");
         jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jDateChooser3.setDateFormatString("dd-MM-yyyy");
-        jDateChooser3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        salaryStart.setDateFormatString("dd-MM-yyyy");
+        salaryStart.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel19.setText("Ngày kết thúc:");
         jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jDateChooser4.setDateFormatString("dd-MM-yyyy");
-        jDateChooser4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        salaryEnd.setDateFormatString("dd-MM-yyyy");
+        salaryEnd.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         salary_table.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         salary_table.setModel(new javax.swing.table.DefaultTableModel(
@@ -437,6 +447,11 @@ public class EmployeeScreen extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton3.setText("XEM");
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -448,11 +463,11 @@ public class EmployeeScreen extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addGap(18, 18, 18)
-                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(salaryStart, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel19)
                         .addGap(18, 18, 18)
-                        .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(salaryEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
                         .addContainerGap(79, Short.MAX_VALUE))
@@ -470,9 +485,9 @@ public class EmployeeScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel18)
-                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salaryStart, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
-                    .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salaryEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
@@ -587,7 +602,7 @@ public class EmployeeScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 996, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -636,8 +651,48 @@ public class EmployeeScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        java.util.Date dateS = attendanceStart.getDate();
+        java.util.Date dateE = attendanceEnd.getDate();
+
+        // Khai báo biến java.sql.Date bên ngoài để có thể sử dụng sau này
+        java.sql.Date sqlDateS = null;
+        java.sql.Date sqlDateE = null;
+
+        // Chuyển đổi java.util.Date sang java.sql.Date nếu không phải null
+        if (dateS != null) {
+            sqlDateS = new java.sql.Date(dateS.getTime());
+        }
+        if (dateE != null) {
+            sqlDateE = new java.sql.Date(dateE.getTime());
+        }
+        List<AttendanceDetail> attendanceDetails = AttendanceDetailDAO.getAllAttendanceDetailByEmployeeIdAndDateRange(employee.getId(), sqlDateS, sqlDateE);
+        updateTableAttendanceHistory(attendanceDetails);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        java.util.Date dateS = salaryStart.getDate();
+        java.util.Date dateE = salaryEnd.getDate();
+
+        // Khai báo biến java.sql.Date bên ngoài để có thể sử dụng sau này
+        java.sql.Date sqlDateS = null;
+        java.sql.Date sqlDateE = null;
+
+        // Chuyển đổi java.util.Date sang java.sql.Date nếu không phải null
+        if (dateS != null) {
+            sqlDateS = new java.sql.Date(dateS.getTime());
+        }
+        if (dateE != null) {
+            sqlDateE = new java.sql.Date(dateE.getTime());
+        }
+        List<Salary> salaries = SalaryDAO.getAllSalariesByEmpIdAndDateRange(employee.getId(), sqlDateS, sqlDateE);
+        updateTableSalaryHistory(salaries);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser attendanceEnd;
+    private com.toedter.calendar.JDateChooser attendanceStart;
     private javax.swing.JTable attendance_table;
     private javax.swing.JLabel branchName_label;
     private javax.swing.JLabel brandAddress_label;
@@ -649,10 +704,6 @@ public class EmployeeScreen extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
@@ -681,6 +732,8 @@ public class EmployeeScreen extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField newPassField;
     private javax.swing.JTextField reNewPassField;
+    private com.toedter.calendar.JDateChooser salaryEnd;
+    private com.toedter.calendar.JDateChooser salaryStart;
     private javax.swing.JTable salary_table;
     // End of variables declaration//GEN-END:variables
 }

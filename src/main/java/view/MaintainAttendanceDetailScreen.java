@@ -11,6 +11,7 @@ import static dao.AttendanceDetailDAO.exportDatabaseToExcel;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MaintainAttendanceDetailScreen extends javax.swing.JFrame {
     public Attendance attendance;
@@ -226,6 +227,8 @@ public class MaintainAttendanceDetailScreen extends javax.swing.JFrame {
                 List<AttendanceDetail> attendanceDetails = AttendanceDetailDAO.getAllAttendanceDetailByAttendanceId(attendance.getId());
                  MaintenanceScreen.viewDetail.updateAttendanceDetailTable(attendanceDetails);
             }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng.");
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 

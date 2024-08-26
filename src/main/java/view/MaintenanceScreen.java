@@ -1248,8 +1248,13 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        viewSalary = new SalaryCalculationScreen(this, getEmployeeIdInTable(empSalary_table));
+        int sr = empSalary_table.getSelectedRow();
+        if(sr != -1){
+            viewSalary = new SalaryCalculationScreen(this, getEmployeeIdInTable(empSalary_table));
         viewSalary.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng.");
+        }
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -1481,10 +1486,15 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonInputNewAccountActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        String empId = getEmployeeIdInTable(empAttendance_table);
-        InputDialog inputDialog = new InputDialog("NHẬP THÔNG TIN CHẤM CÔNG", empId, this);
-        inputDialog.setVisible(true);
-        inputDialog.settingTextField(true, false);
+        int sr = empAttendance_table.getSelectedRow();
+        if(sr != -1){
+            String empId = getEmployeeIdInTable(empAttendance_table);
+            InputDialog inputDialog = new InputDialog("NHẬP THÔNG TIN CHẤM CÔNG", empId, this);
+            inputDialog.setVisible(true);
+            inputDialog.settingTextField(true, false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng.");
+        }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
