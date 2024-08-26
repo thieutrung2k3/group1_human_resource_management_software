@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import dao.AttendanceDAO;
 import static dao.AttendanceDetailDAO.exportDatabaseToExcel;
 import dao.SalaryDAO;
 import java.io.File;
@@ -33,8 +34,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private String branchId;
     public MaintenanceScreen() {
         initComponents();
-        MaintainAttendanceController.gI().loadAttendanceData(this);
-        MaintainSalaryController.loadSalaryData(this);
     }
     public MaintenanceScreen(String branchId) {
         this.branchId = branchId;
@@ -64,6 +63,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
         jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
         jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+        updateEmpInSalary();
     }
     public static MaintenanceScreen gI(){
         if(instance == null){
@@ -72,23 +72,21 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         return instance;
                 
     }
-    
-    public void updateAttendanceTable(List<Attendance> attendances) {
+    public void updateAttendanceTable(String id) {
             DefaultTableModel attendance_model = (DefaultTableModel) attendance_table.getModel();
+            List<Attendance> attendances = AttendanceDAO.selectAttendanceByEmpId(id);
             attendance_model.setRowCount(0);
             for (Attendance attendance : attendances) {
                 Object[] row = {
                     attendance.getId(),
-                    attendance.getEmpId(),
                     attendance.getCreatedDate()
                 };
                 attendance_model.addRow(row);
             }
-            int count = attendance_table.getRowCount();
-            countLabel.setText("Count: " + count);
     }
-    public void updateSalaryTable(List<Salary> salaries) {
+    public void updateSalaryTable(String id) {
             DefaultTableModel salary_model = (DefaultTableModel) salary_table.getModel();
+            List<Salary> salaries = SalaryDAO.getAllSalariesByEmpId(id);
             salary_model.setRowCount(0);
             for (Salary s : salaries) {
                 Object[] row = {
@@ -103,6 +101,20 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
     }
 
+    public void updateEmpInSalary(){
+        DefaultTableModel ES_model = (DefaultTableModel) empSalary_table.getModel();
+        DefaultTableModel EA_model = (DefaultTableModel) empAttendance_table.getModel();
+        List<Employee> employees = MaintainEmployeeController.selectEmpsByBranch(branchId);
+        ES_model.setRowCount(0);
+        EA_model.setRowCount(0);
+        for(Employee e : employees){
+            Object[] row = {
+                e.getId() + "-" + e.getFullName()
+            };
+            ES_model.addRow(row); 
+            EA_model.addRow(row);
+        }
+    }
     public String getSelectedRowAttendanceId(){
         int sr = attendance_table.getSelectedRow();
         String id = "";
@@ -134,8 +146,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jTabbedPaneMaintainScreen = new javax.swing.JTabbedPane();
         jPanelMaintainAccount = new javax.swing.JPanel();
         jLabelAdminTitle = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableAccountList = new javax.swing.JTable();
         jLabelAccountId = new javax.swing.JLabel();
         jLabelUserName = new javax.swing.JLabel();
         jLabelPassword = new javax.swing.JLabel();
@@ -149,6 +159,8 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jButtonDeleteAccount = new javax.swing.JButton();
         jTextFieldAccId = new javax.swing.JTextField();
         jButtonInputNewAccount = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableAccountList = new javax.swing.JTable();
         jPanelMaintainEmployee = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -209,12 +221,16 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         attendance_table = new javax.swing.JTable();
         jButton13 = new javax.swing.JButton();
         countLabel = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        empAttendance_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         salary_table = new javax.swing.JTable();
         jButton14 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        empSalary_table = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
 
@@ -232,26 +248,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabelAdminTitle.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabelAdminTitle.setText("QUẢN TRỊ VIÊN");
         jLabelAdminTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jTableAccountList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableAccountList.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        jTableAccountList.getTableHeader().setReorderingAllowed(false);
-        jTableAccountList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableAccountListMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableAccountList);
 
         jLabelAccountId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelAccountId.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -326,48 +322,74 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
         });
 
+        jTableAccountList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableAccountList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Mã tài khoản", "Tên người dùng", "Mật khẩu", "Quyền truy cập"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableAccountList.getTableHeader().setReorderingAllowed(false);
+        jScrollPane6.setViewportView(jTableAccountList);
+
         javax.swing.GroupLayout jPanelMaintainAccountLayout = new javax.swing.GroupLayout(jPanelMaintainAccount);
         jPanelMaintainAccount.setLayout(jPanelMaintainAccountLayout);
         jPanelMaintainAccountLayout.setHorizontalGroup(
             jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1))
-            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                 .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addComponent(jLabelAdminTitle))
-                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelAccountId)
-                            .addComponent(jLabelPassword)
-                            .addComponent(jLabelAccessRight)
-                            .addComponent(jLabelUserName))
                         .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(334, 334, 334)
+                                .addComponent(jLabelAdminTitle))
+                            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                .addGap(58, 58, 58)
                                 .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelAccountId)
+                                    .addComponent(jLabelPassword)
+                                    .addComponent(jLabelAccessRight)
+                                    .addComponent(jLabelUserName))
+                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                        .addComponent(jRadioButtonAdmin)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButtonUser))))
-                            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMaintainAccountLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonDeleteAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonAddAccount))
-                        .addGap(33, 33, 33)
-                        .addComponent(jButtonInputNewAccount)))
-                .addContainerGap(453, Short.MAX_VALUE))
+                                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                                .addComponent(jRadioButtonAdmin)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jRadioButtonUser))))
+                                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMaintainAccountLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(51, 51, 51)
+                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonDeleteAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonAddAccount))
+                                .addGap(33, 33, 33)
+                                .addComponent(jButtonInputNewAccount)))
+                        .addGap(0, 502, Short.MAX_VALUE))
+                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane6)))
+                .addContainerGap())
         );
         jPanelMaintainAccountLayout.setVerticalGroup(
             jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,9 +423,8 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                         .addComponent(jButtonUpdateAccount)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonDeleteAccount)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
         );
 
         jTabbedPaneMaintainScreen.addTab("TÀI KHOẢN", jPanelMaintainAccount);
@@ -614,7 +635,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                                 .addComponent(jLabel18)))
                         .addGap(18, 18, 18)
                         .addComponent(jButtonInputNewEmp)
-                        .addContainerGap(210, Short.MAX_VALUE))))
+                        .addContainerGap(263, Short.MAX_VALUE))))
         );
         jPanelMaintainEmployeeLayout.setVerticalGroup(
             jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,7 +689,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonDelEmp)))
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -891,7 +912,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -911,6 +932,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton10.setText("XÓA");
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton11.setText("SỬA");
@@ -933,17 +959,17 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         attendance_table.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         attendance_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Mã bảng chấm công", "Ngày tạo", "Mã nhân viên"
+                "Mã bảng chấm công", "Ngày tạo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -955,7 +981,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         if (attendance_table.getColumnModel().getColumnCount() > 0) {
             attendance_table.getColumnModel().getColumn(0).setResizable(false);
             attendance_table.getColumnModel().getColumn(1).setResizable(false);
-            attendance_table.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jButton13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -964,13 +989,36 @@ public class MaintenanceScreen extends javax.swing.JFrame {
 
         countLabel.setText("Count: ");
 
+        empAttendance_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Nhân viên"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        empAttendance_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                empAttendance_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(empAttendance_table);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -987,10 +1035,16 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton13)))
-                .addContainerGap(509, Short.MAX_VALUE)));
+                .addContainerGap(285, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4))
+        );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel28)
@@ -1002,7 +1056,9 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                     .addComponent(jButton10)
                     .addComponent(jButton13))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1056,36 +1112,69 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jButton16.setText("TÍNH LƯƠNG");
         jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        empSalary_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Nhân viên"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        empSalary_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                empSalary_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(empSalary_table);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5))
-            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(336, 336, 336)
-                        .addComponent(jLabel29))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton14)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton16)))
-                .addContainerGap(509, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 5, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 937, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(415, 415, 415)
+                                .addComponent(jLabel29))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(jButton14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton16)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel29)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton14)
                     .addComponent(jButton16))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1095,11 +1184,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1112, Short.MAX_VALUE)
+            .addGap(0, 1166, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
 
         jTabbedPaneMaintainScreen.addTab("QUAY VỀ", jPanel7);
@@ -1108,11 +1197,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1112, Short.MAX_VALUE)
+            .addGap(0, 1166, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
 
         jTabbedPaneMaintainScreen.addTab("ĐĂNG XUẤT", jPanel9);
@@ -1165,7 +1254,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "error");
             }
             else{
-                MaintainAttendanceController.gI().loadAttendanceData(this);
+                
             }
         }
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -1233,7 +1322,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
 
     private void jTabbedPaneMaintainScreenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPaneMaintainScreenMouseClicked
         // TODO add your handling code here:
-        switch (this.jTabbedPaneMaintainScreen.getSelectedIndex()) {
+       /* switch (this.jTabbedPaneMaintainScreen.getSelectedIndex()) {
             case 0:
                 this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
                 break;
@@ -1245,7 +1334,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 break;
             default:
                 break;
-        }
+        }*/
     }//GEN-LAST:event_jTabbedPaneMaintainScreenMouseClicked
 
 
@@ -1264,7 +1353,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         String password = this.jTextFieldPassword.getText();
         String accessRight;
         if (this.jRadioButtonAdmin.isSelected()) {
-            accessRight = this.jRadioButtonAdmin.getText();
+            accessRight = "Admin";
         } else {
             accessRight = this.jRadioButtonUser.getText();
         }
@@ -1278,27 +1367,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Account not inserted!", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAddAccountActionPerformed
-
-    private void jTableAccountListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAccountListMouseClicked
-        // TODO add your handling code here:
-        int selectedRowIndex = this.jTableAccountList.getSelectedRow();
-        if (selectedRowIndex != -1) {
-            String accId = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 0);
-            String userName = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 1);
-            String password = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 2);
-            String accessRight = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 3);
-
-            this.jTextFieldAccId.setEditable(false);
-            this.jTextFieldAccId.setText(accId);
-            this.jTextFieldUserName.setText(userName);
-            this.jTextFieldPassword.setText(password);
-            if (accessRight.equals(this.jRadioButtonAdmin.getText())) {
-                this.jRadioButtonAdmin.setSelected(true);
-            } else {
-                this.jRadioButtonUser.setSelected(true);
-            }
-        }
-    }//GEN-LAST:event_jTableAccountListMouseClicked
 
     private void jButtonUpdateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateAccountActionPerformed
         // TODO add your handling code here:
@@ -1639,6 +1707,22 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonUpdateSaleActionPerformed
 
+    private void empSalary_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empSalary_tableMouseClicked
+        int sr = empSalary_table.getSelectedRow();
+        String line = empSalary_table.getValueAt(sr, 0).toString();
+        String[] parts = line.split("-");
+        String id = parts[0];
+        updateSalaryTable(id);
+    }//GEN-LAST:event_empSalary_tableMouseClicked
+
+    private void empAttendance_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empAttendance_tableMouseClicked
+        int sr = empAttendance_table.getSelectedRow();
+        String line = empAttendance_table.getValueAt(sr, 0).toString();
+        String[] parts = line.split("-");
+        String id = parts[0];
+        updateAttendanceTable(id);
+    }//GEN-LAST:event_empAttendance_tableMouseClicked
+
     //utility methods
     private boolean isAccInfoEmpty() {
         boolean isEmpty = false;
@@ -1703,28 +1787,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         return isEmpty;
     }
 
-    //entry point of this JFrame
-    public static void main(String args[]) {
-        /* Set the System look and feel */
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                view = new MaintenanceScreen();
-                view.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable attendance_table;
     private javax.swing.JLabel countLabel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTable empAttendance_table;
+    private javax.swing.JTable empSalary_table;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1791,21 +1858,9 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTable salary_table;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPaneMaintainScreen;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
     private javax.swing.JTable jTableAccountList;
     private javax.swing.JTable jTableEmpList;
     private javax.swing.JTable jTableSaleList;
@@ -1822,5 +1877,6 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldSaleId;
     private javax.swing.JTextField jTextFieldSaleValue;
     private javax.swing.JTextField jTextFieldUserName;
+    private javax.swing.JTable salary_table;
     // End of variables declaration//GEN-END:variables
 }

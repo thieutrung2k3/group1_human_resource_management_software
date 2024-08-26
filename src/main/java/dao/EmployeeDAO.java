@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.Employee;
+import util.DateUtils;
 import util.JDBCutil;
 
 public class EmployeeDAO {
@@ -19,7 +20,31 @@ public class EmployeeDAO {
         }
         return instance;
     }
-    
+    public static Employee getEmployeeByAccountId(String accountId){
+        String sql = "SELECT * FROM EMPLOYEE WHERE account_id = ?";
+        Employee employee = new Employee();
+        try(Connection connection = JDBCutil.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, accountId);
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                if(resultSet.next()){
+                     employee.setId(resultSet.getString("employee_id"));
+                     employee.setBranchId(resultSet.getString("branch_id"));
+                     employee.setAccountId(accountId);
+                     employee.setFullName(resultSet.getString("full_name"));
+                     employee.setDateOfBirth(resultSet.getDate("date_of_birth"));
+                     employee.setAddress(resultSet.getString("emp_address"));
+                     employee.setEmail(resultSet.getString("email"));
+                     employee.setPhoneNumber(resultSet.getString("phone_number"));
+                     employee.setPosition(resultSet.getString("employee_position"));
+                     employee.setGender(resultSet.getString("gender"));
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("error in getEmployeeByAccoutId func: " + e.getMessage());
+        }
+        return employee;
+    }
     public HashMap<String, String> getEmployeeIdAndName(){
         HashMap<String, String> employees = new HashMap<>();
         String sql = "SELECT employee_id, full_name FROM EMPLOYEE ";
@@ -42,9 +67,9 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "SELECT employee_id, branch.branch_id, account_id, full_name, date_of_birth, emp_address, employee.email, phone_number, employee_position, gender\n"
-                    + "FROM employee INNER JOIN branch ON employee.branch_id = branch.branch_id\n"
-                    + "WHERE branch.branch_id = ?;";
+            String sql = "SELECT employee_id, BRANCH.branch_id, account_id, full_name, date_of_birth, emp_address, EMPLOYEE.email, phone_number, employee_position, gender\n"
+                    + "FROM EMPLOYEE INNER JOIN BRANCH ON EMPLOYEE.branch_id = BRANCH.branch_id\n"
+                    + "WHERE BRANCH.branch_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, branchId);
 
@@ -83,7 +108,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO EMPLOYEE VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, emp.getId());
             st.setString(2, emp.getBranchId());
@@ -119,7 +144,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "delete from employee where account_id = ?;";
+            String sql = "delete from EMPLOYEE where account_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, accId);
 
@@ -146,7 +171,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select employee_id from employee where employee_id = ?;";
+            String sql = "select employee_id from EMPLOYEE where employee_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, empId);
 
@@ -179,7 +204,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select email from employee where email = ?;";
+            String sql = "select email from EMPLOYEE where email = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, email);
 
@@ -212,7 +237,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select phone_number from employee where phone_number = ?;";
+            String sql = "select phone_number from EMPLOYEE where phone_number = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, phoneNumber);
 
@@ -245,7 +270,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "update employee"
+            String sql = "update EMPLOYEE"
                     + " set branch_id = ?,"
                     + " account_id = ?,"
                     + " full_name = ?,"
@@ -291,7 +316,7 @@ public class EmployeeDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "delete from employee where employee_id = ?;";
+            String sql = "delete from EMPLOYEE where employee_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, empId);
 

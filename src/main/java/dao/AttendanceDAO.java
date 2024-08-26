@@ -171,9 +171,9 @@ public class AttendanceDAO {
 
             // Bước 2: tạo ra đối tượng statement
             String sql = "select attendance_id"
-                    + " from attendance inner join employee"
-                    + " on attendance.employee_id = employee.employee_id"
-                    + " where employee.employee_id = ?;";
+                    + " from ATTENDANCE inner join EMPLOYEE"
+                    + " on ATTENDANCE.employee_id = EMPLOYEE.employee_id"
+                    + " where EMPLOYEE.employee_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, empId);
 
@@ -204,7 +204,7 @@ public class AttendanceDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "delete from attendance where employee_id = ?;";
+            String sql = "delete from ATTENDANCE where employee_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, empId);
 

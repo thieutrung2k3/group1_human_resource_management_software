@@ -15,15 +15,7 @@ import view.MaintenanceScreen;
 import dao.SalaryDAO;
 
 public class MaintainSalaryController {
-    public static void loadSalaryData(MaintenanceScreen view) {
-        try {
-            List<Salary> salaries = SalaryDAO.getAllSalaries();
-            view.updateSalaryTable(salaries);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(view, "Error loading attendance data.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    
     public static boolean deleteSalaryByEmpId(String empId){
         return SalaryDAO.deleteSalaryByEmpId(empId);
     }

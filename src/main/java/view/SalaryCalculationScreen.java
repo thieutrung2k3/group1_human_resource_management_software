@@ -265,7 +265,6 @@ public class SalaryCalculationScreen extends javax.swing.JFrame {
         salary.setPaymentDate(DateUtils.convertStringToSqlDate(formattedDate));
         salary.setTotalSalary(salary.getBaseSalary()+salary.getAdditionalSalary()-salary.getDeduction());
         SalaryDAO.addSalary(salary);
-        MaintainSalaryController.loadSalaryData(MaintenanceScreen.view);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

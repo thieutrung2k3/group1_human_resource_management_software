@@ -19,9 +19,9 @@ public class SaleDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select sale_id, branch.branch_id, target_value, start_time, deadline, sta_tus"
-                    + " from sale inner join branch on sale.branch_id = branch.branch_id"
-                    + " where branch.branch_id = ?;";
+            String sql = "select sale_id, BRANCH.branch_id, target_value, start_time, deadline, sta_tus"
+                    + " from SALE inner join BRANCH on SALE.branch_id = BRANCH.branch_id"
+                    + " where BRANCH.branch_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, branchId);
 
@@ -57,7 +57,7 @@ public class SaleDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select sale_id from sale where sale_id = ?;";
+            String sql = "select sale_id from SALE where sale_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, saleId);
 
@@ -91,7 +91,7 @@ public class SaleDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "INSERT INTO sale VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO SALE VALUES(?,?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, sale.getId());
             st.setString(2, sale.getBranchId());
@@ -124,7 +124,7 @@ public class SaleDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "update sale"
+            String sql = "update SALE"
                     + " set branch_id = ?,"
                     + " target_value = ?,"
                     + " start_time = ?,"
@@ -163,7 +163,7 @@ public class SaleDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "DELETE FROM sale\n"
+            String sql = "DELETE FROM SALE\n"
                     + "WHERE sale_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, sale.getId());

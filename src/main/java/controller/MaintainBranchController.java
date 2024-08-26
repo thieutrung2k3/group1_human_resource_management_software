@@ -5,7 +5,10 @@
 package controller;
 
 import dao.BranchDAO;
+import java.util.ArrayList;
+import java.util.List;
 import model.Branch;
+import view.AdministratorScreen;
 
 /**
  *
@@ -15,5 +18,9 @@ public class MaintainBranchController {
     
     public static Branch selectBranchById(String branchId){
         return BranchDAO.selectBranchById(branchId);
+    }
+    public static void loadAllDataBranchTable(AdministratorScreen view){
+        List<Branch> braches = BranchDAO.getAllBranches();
+        view.updateBranchTable(braches);
     }
 }

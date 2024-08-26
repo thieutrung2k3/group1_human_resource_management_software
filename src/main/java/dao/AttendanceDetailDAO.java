@@ -20,6 +20,64 @@ import util.TimeUtils;
 
 
 public class AttendanceDetailDAO {
+    
+    public static List<AttendanceDetail> getAllAttendanceDetailByEmployeeId(String empId) {
+    List<AttendanceDetail> attendanceDetails = new ArrayList<>();
+    String sql = "SELECT * "
+            + "FROM ATTENDANCE "
+            + "INNER JOIN ATTENDANCE_DETAIL ON ATTENDANCE.attendance_id = ATTENDANCE_DETAIL.attendance_id "
+            + "WHERE ATTENDANCE.employee_id = ?";
+
+    try (Connection connection = JDBCutil.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Thiết lập giá trị tham số cho PreparedStatement
+        preparedStatement.setString(1, empId);
+
+        // Thực thi truy vấn
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                AttendanceDetail attendanceDetail = new AttendanceDetail();
+                attendanceDetail.setId(resultSet.getString("attendance_detail_id"));
+                attendanceDetail.setAttendanceId(resultSet.getString("attendance_id")); 
+
+                // Kiểm tra giá trị "check_in_time" có bị null không trước khi chuyển đổi
+                String checkInTimeStr = resultSet.getString("check_in_time");
+                if (checkInTimeStr != null) {
+                    attendanceDetail.setCheckInTime(TimeUtils.convertStringToSqlTime(checkInTimeStr));
+                } else {
+                    attendanceDetail.setCheckInTime(null); 
+                }
+
+                // Kiểm tra giá trị "check_out_time" có bị null không trước khi chuyển đổi
+                String checkOutTimeStr = resultSet.getString("check_out_time");
+                if (checkOutTimeStr != null) {
+                    attendanceDetail.setCheckOutTime(TimeUtils.convertStringToSqlTime(checkOutTimeStr));
+                } else {
+                    attendanceDetail.setCheckOutTime(null); 
+                }
+
+                // Kiểm tra giá trị "attendance_date" có bị null không trước khi chuyển đổi
+                String attendanceDateStr = resultSet.getString("attendance_date");
+                if (attendanceDateStr != null) {
+                    attendanceDetail.setAttendanceDate(DateUtils.convertStringToSqlDate(attendanceDateStr));
+                } else {
+                    attendanceDetail.setAttendanceDate(null); 
+                }
+
+                // Kiểm tra trạng thái dựa trên check-in time
+                attendanceDetail.setStatus(TimeUtils.getAttendanceStatus(attendanceDetail.getCheckInTime()));
+
+                attendanceDetails.add(attendanceDetail); // Thêm vào danh sách kết quả
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("SQL Exception: " + e.getMessage()); // Cải thiện thông báo lỗi
+    }
+
+    return attendanceDetails;
+}
+
     public static List<AttendanceDetail> getAllAttendanceDetailByAttendanceId(String id) {
         List<AttendanceDetail> attendanceDetails = new ArrayList<>();
         String sql = "SELECT * FROM ATTENDANCE_DETAIL WHERE attendance_id = ?"; // Sử dụng dấu ? để sử dụng PreparedStatement
@@ -241,7 +299,7 @@ public class AttendanceDetailDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "delete from attendance_detail where attendance_id = ?;";
+            String sql = "delete from ATTENDANCE_DETAIL where attendance_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             for (Attendance att : attList) {
                 st.setString(1, att.getId());

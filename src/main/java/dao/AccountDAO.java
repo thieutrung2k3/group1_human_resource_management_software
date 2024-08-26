@@ -9,6 +9,27 @@ import model.Account;
 import util.JDBCutil;
 
 public class AccountDAO {
+    public static boolean isAccountExist(Account account){
+        String sql = "SELECT * FROM A_CCOUNT WHERE username = ? AND pass_word = ?";
+        try(Connection connection = JDBCutil.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, account.getUserName());
+            preparedStatement.setString(2, account.getPassword());
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                if(resultSet.next()){
+                    account.setId(resultSet.getString("account_id"));
+                    account.setAccessRight(resultSet.getString("access_right"));
+                    return true;
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("error in isAccountExist func: " + e.getMessage());
+            return false;
+        }
+        return false;
+    }
+    
+   
     
     public static ArrayList<Account> selectAccountsByBranch(String branchId) {
         ArrayList<Account> accList = new ArrayList();
@@ -17,10 +38,10 @@ public class AccountDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "SELECT a_ccount.account_id, username, pass_word, access_right\n"
-                    + "FROM branch INNER JOIN employee ON branch.branch_id = employee.branch_id\n"
-                    + "INNER JOIN a_ccount ON a_ccount.account_id = employee.account_id\n"
-                    + "WHERE branch.branch_id = ?;";
+            String sql = "SELECT A_CCOUNT.account_id, username, pass_word, access_right\n"
+                    + "FROM BRANCH INNER JOIN EMPLOYEE ON BRANCH.branch_id = EMPLOYEE.branch_id\n"
+                    + "INNER JOIN A_CCOUNT ON A_CCOUNT.account_id = EMPLOYEE.account_id\n"
+                    + "WHERE BRANCH.branch_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, branchId);
 
@@ -53,7 +74,7 @@ public class AccountDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "INSERT INTO a_ccount VALUES(?,?,?,?)";
+            String sql = "INSERT INTO A_CCOUNT VALUES(?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, acc.getId());
             st.setString(2, acc.getUserName());
@@ -83,7 +104,7 @@ public class AccountDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "UPDATE a_ccount\n"
+            String sql = "UPDATE A_CCOUNT\n"
                     + "SET username = ?,"
                     + "pass_word = ?,"
                     + "access_right = ?\n"
@@ -117,7 +138,7 @@ public class AccountDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "DELETE FROM a_ccount\n"
+            String sql = "DELETE FROM A_CCOUNT\n"
                     + "WHERE account_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, acc.getId());
@@ -146,7 +167,7 @@ public class AccountDAO {
 
             // Bước 2: tạo ra đối tượng statement
             String sql = "select account_id"
-                    + " from a_ccount"
+                    + " from A_CCOUNT"
                     + " where account_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, accId);
@@ -180,7 +201,7 @@ public class AccountDAO {
 
             // Bước 2: tạo ra đối tượng statement
             String sql = "select username"
-                    + " from a_ccount"
+                    + " from A_CCOUNT"
                     + " where username = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, userName);
@@ -213,7 +234,7 @@ public class AccountDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "delete from a_ccount where account_id = ?;";
+            String sql = "delete from A_CCOUNT where account_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, acc.getId());
 
@@ -240,9 +261,9 @@ public class AccountDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select a_ccount.account_id"
-                    + " from a_ccount inner join employee"
-                    + " on a_ccount.account_id = employee.account_id"
+            String sql = "select A_CCOUNT.account_id"
+                    + " from A_CCOUNT inner join EMPLOYEE"
+                    + " on A_CCOUNT.account_id = EMPLOYEE.account_id"
                     + " where employee_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, empId);

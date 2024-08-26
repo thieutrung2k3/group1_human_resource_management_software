@@ -10,7 +10,6 @@ import model.Attendance;
 import view.*;
 
 public class MaintainAttendanceController {
-    private MaintenanceScreen view;
     private AttendanceDAO attendanceDAO;
     private static MaintainAttendanceController instance;
     
@@ -24,7 +23,7 @@ public class MaintainAttendanceController {
     public static List<Attendance> selectAttendanceByEmpId(String empId){
         return AttendanceDAO.selectAttendanceByEmpId(empId);
     }
-    public void loadAttendanceData(MaintenanceScreen view) {
+    /*public void loadAttendanceData(MaintenanceScreen view) {
         try {
             List<Attendance> attendances = AttendanceDAO.gI().getAllAttendances();
             view.updateAttendanceTable(attendances);
@@ -32,7 +31,7 @@ public class MaintainAttendanceController {
             e.printStackTrace();
             JOptionPane.showMessageDialog(view, "Error loading attendance data.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }*/
     
     public void updateAttendanceInformation(MaintenanceScreen view){
         

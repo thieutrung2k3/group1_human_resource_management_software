@@ -14,9 +14,35 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.impl.regex.REUtil;
 import util.JDBCutil;
 
 public class SalaryDAO {
+    
+    public static List<Salary> getAllSalariesByEmpId(String empId){
+        String sql = "SELECT * FROM SALARY WHERE employee_id = ?";
+        List<Salary> salaries = new ArrayList<>();
+        try(Connection connection = JDBCutil.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, empId);
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                while(resultSet.next()){
+                    Salary salary = new Salary();
+                    salary.setId(resultSet.getString("salary_id"));
+                    salary.setEmpId(resultSet.getString("employee_id"));
+                    salary.setBaseSalary((int)resultSet.getDouble("base_salary"));
+                    salary.setAdditionalSalary((int)resultSet.getDouble("additional_salary"));
+                    salary.setDeduction((int)resultSet.getDouble("deduction"));
+                    salary.setTotalSalary((int)resultSet.getDouble("total_salary"));
+                    salary.setPaymentDate(resultSet.getDate("payment_date"));
+                    salaries.add(salary);
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("error in getAllSalariesByEmpId: " + e);
+        }
+        return salaries;
+    }
     public static boolean addSalary(Salary salary) {
         String sql = "INSERT INTO SALARY (salary_id, employee_id, base_salary, additional_salary, deduction, total_salary, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -119,7 +145,7 @@ public class SalaryDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "delete from salary where employee_id = ?;";
+            String sql = "delete from SALARY where employee_id = ?;";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, empId);
 

@@ -234,7 +234,7 @@ public class InputDialog extends javax.swing.JFrame {
             if(type == 1){
                 if(!AttendanceDAO.gI().hasSingleAttendanceForMonth(attendance.getEmpId(), LocalDate.now())){
                     AttendanceDAO.gI().addAttendance(attendance);
-                    MaintainAttendanceController.gI().loadAttendanceData(MaintenanceScreen.view);
+                  //  MaintainAttendanceController.gI().loadAttendanceData(LoginScreen.maintenanceScreen);
                     dispose();
                 }
                 else{
@@ -245,7 +245,7 @@ public class InputDialog extends javax.swing.JFrame {
                 int i = AttendanceDAO.gI().updateAttendance(attendance, getIdFromSR);
                 System.out.println(getIdFromSR + "-" + i + "-" + attendance.getId() + "=" + attendance.getEmpId() + "=" + attendance.getCreatedDate());
                 
-                    MaintainAttendanceController.gI().loadAttendanceData(MaintenanceScreen.view);
+                 //   MaintainAttendanceController.gI().loadAttendanceData(LoginScreen.maintenanceScreen);
                     dispose();
                 
             }
