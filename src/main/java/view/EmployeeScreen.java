@@ -16,6 +16,7 @@ import model.*;
 import controller.*;
 import dao.AccountDAO;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author PC
@@ -26,17 +27,19 @@ public class EmployeeScreen extends javax.swing.JFrame {
     public Employee employee;
     public Account account;
     public static EmployeeScreen instance;
+
     public EmployeeScreen(Employee employee, Account account) {
         initComponents();
         this.employee = employee;
         this.account = account;
         init();
     }
-    public EmployeeScreen(){
-        
+
+    public EmployeeScreen() {
+
     }
 
-    public void init(){
+    public void init() {
         empId_label.setText(employee.getId());
         empName_label.setText(employee.getFullName());
         empGender_label.setText(employee.getGender());
@@ -47,25 +50,24 @@ public class EmployeeScreen extends javax.swing.JFrame {
         ViewAttendanceHistoryController.loadDataAttendanceTable(this, employee.getId());
         ViewSalaryHistoryController.loadDataSalaryTable(this, employee.getId());
     }
-    
-    public void updateTableAttendanceHistory(List<AttendanceDetail> attendanceDetails){
+
+    public void updateTableAttendanceHistory(List<AttendanceDetail> attendanceDetails) {
         DefaultTableModel attendance_model = (DefaultTableModel) attendance_table.getModel();
         attendance_model.setRowCount(0);
-        for(AttendanceDetail a : attendanceDetails){
+        for (AttendanceDetail a : attendanceDetails) {
             Object[] row = {
                 a.getCheckInTime(),
                 a.getCheckOutTime(),
                 a.getStatus(),
-                a.getAttendanceDate(),
-            };
+                a.getAttendanceDate(),};
             attendance_model.addRow(row);
         }
     }
-    
-    public void updateTableSalaryHistory(List<Salary> salaries){
+
+    public void updateTableSalaryHistory(List<Salary> salaries) {
         DefaultTableModel salary_model = (DefaultTableModel) salary_table.getModel();
         salary_model.setRowCount(0);
-        for(Salary s : salaries){
+        for (Salary s : salaries) {
             Object[] row = {
                 s.getBaseSalary(),
                 s.getAdditionalSalary(),
@@ -76,21 +78,21 @@ public class EmployeeScreen extends javax.swing.JFrame {
             salary_model.addRow(row);
         }
     }
-    
-    public static EmployeeScreen gI(){
-        if(instance == null){
+
+    public static EmployeeScreen gI() {
+        if (instance == null) {
             instance = new EmployeeScreen();
         }
         return instance;
     }
-    
-    public boolean isPasswordFieldBlank(){
-        if(currentPassField.getText().isEmpty() || newPassField.getText().isEmpty() || reNewPassField.getText().isEmpty()){
+
+    public boolean isPasswordFieldBlank() {
+        if (currentPassField.getText().isEmpty() || newPassField.getText().isEmpty() || reNewPassField.getText().isEmpty()) {
             return true;
         }
         return false;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -157,6 +159,11 @@ public class EmployeeScreen extends javax.swing.JFrame {
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         jTabbedPane1.setAutoscrolls(true);
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -595,27 +602,24 @@ public class EmployeeScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(!isPasswordFieldBlank()){
+        if (!isPasswordFieldBlank()) {
             String newPass = newPassField.getText();
             String reNewPass = reNewPassField.getText();
-            if(newPass.equals(reNewPass)){
+            if (newPass.equals(reNewPass)) {
                 String currentPass = currentPassField.getText();
-               // System.out.println(this.account.getPassword() + "-" + currentPass);
-                if(this.account.getPassword().equals(currentPass)){
+                // System.out.println(this.account.getPassword() + "-" + currentPass);
+                if (this.account.getPassword().equals(currentPass)) {
                     this.account.setPassword(newPass);
                     boolean r = AccountDAO.updateAccountById(this.account);
-                    if(r){
+                    if (r) {
                         JOptionPane.showMessageDialog(rootPane, "Đổi mật khẩu thành công!");
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(rootPane, "Đổi mật khẩu thất bại!");
                     }
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(rootPane, "Mật khẩu không chính xác!");
                 }
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Mật khẩu mới không trùng khớp!");
             }
             currentPassField.setText("");
@@ -624,7 +628,14 @@ public class EmployeeScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        // TODO add your handling code here:
+        if (this.jTabbedPane1.getSelectedIndex() == 4) {
+            new LoginScreen().setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable attendance_table;

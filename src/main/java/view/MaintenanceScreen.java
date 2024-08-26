@@ -26,15 +26,18 @@ import util.*;
 import util.JTextFieldUtil;
 
 public class MaintenanceScreen extends javax.swing.JFrame {
+
     private static MaintenanceScreen instance;
     public static MaintenanceScreen view;
     public MaintainAttendanceDetailScreen detailScreen;
     public static MaintainAttendanceDetailScreen viewDetail;
     public static SalaryCalculationScreen viewSalary;
     private String branchId;
+
     public MaintenanceScreen() {
         initComponents();
     }
+
     public MaintenanceScreen(String branchId) {
         this.branchId = branchId;
         initComponents();
@@ -65,80 +68,84 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
         updateEmpInSalary();
     }
-    public static MaintenanceScreen gI(){
-        if(instance == null){
+
+    public static MaintenanceScreen gI() {
+        if (instance == null) {
             instance = new MaintenanceScreen();
         }
         return instance;
-                
-    }
-    public void updateAttendanceTable(String id) {
-            DefaultTableModel attendance_model = (DefaultTableModel) attendance_table.getModel();
-            List<Attendance> attendances = AttendanceDAO.selectAttendanceByEmpId(id);
-            attendance_model.setRowCount(0);
-            for (Attendance attendance : attendances) {
-                Object[] row = {
-                    attendance.getId(),
-                    attendance.getCreatedDate()
-                };
-                attendance_model.addRow(row);
-            }
-    }
-    public void updateSalaryTable(String id) {
-            DefaultTableModel salary_model = (DefaultTableModel) salary_table.getModel();
-            List<Salary> salaries = SalaryDAO.getAllSalariesByEmpId(id);
-            salary_model.setRowCount(0);
-            for (Salary s : salaries) {
-                Object[] row = {
-                    s.getId(),
-                    s.getBaseSalary(),
-                    s.getDeduction(),
-                    s.getAdditionalSalary(),
-                    s.getTotalSalary(),
-                    s.getPaymentDate()
-                };
-                salary_model.addRow(row);
-            }
+
     }
 
-    public void updateEmpInSalary(){
+    public void updateAttendanceTable(String id) {
+        DefaultTableModel attendance_model = (DefaultTableModel) attendance_table.getModel();
+        List<Attendance> attendances = AttendanceDAO.selectAttendanceByEmpId(id);
+        attendance_model.setRowCount(0);
+        for (Attendance attendance : attendances) {
+            Object[] row = {
+                attendance.getId(),
+                attendance.getCreatedDate()
+            };
+            attendance_model.addRow(row);
+        }
+    }
+
+    public void updateSalaryTable(String id) {
+        DefaultTableModel salary_model = (DefaultTableModel) salary_table.getModel();
+        List<Salary> salaries = SalaryDAO.getAllSalariesByEmpId(id);
+        salary_model.setRowCount(0);
+        for (Salary s : salaries) {
+            Object[] row = {
+                s.getId(),
+                s.getBaseSalary(),
+                s.getDeduction(),
+                s.getAdditionalSalary(),
+                s.getTotalSalary(),
+                s.getPaymentDate()
+            };
+            salary_model.addRow(row);
+        }
+    }
+
+    public void updateEmpInSalary() {
         DefaultTableModel ES_model = (DefaultTableModel) empSalary_table.getModel();
         DefaultTableModel EA_model = (DefaultTableModel) empAttendance_table.getModel();
         List<Employee> employees = MaintainEmployeeController.selectEmpsByBranch(branchId);
         ES_model.setRowCount(0);
         EA_model.setRowCount(0);
-        for(Employee e : employees){
+        for (Employee e : employees) {
             Object[] row = {
                 e.getId() + "-" + e.getFullName()
             };
-            ES_model.addRow(row); 
+            ES_model.addRow(row);
             EA_model.addRow(row);
         }
     }
-    public String getSelectedRowAttendanceId(){
+
+    public String getSelectedRowAttendanceId() {
         int sr = attendance_table.getSelectedRow();
         String id = "";
-        if(sr != -1){
+        if (sr != -1) {
             id = attendance_table.getValueAt(sr, 0).toString();
-           
+
         }
         return id;
     }
-    
-    public boolean isSelectedRowAttendanceTable(){
+
+    public boolean isSelectedRowAttendanceTable() {
         int sr = attendance_table.getSelectedRow();
         return (sr != -1);
     }
-    
-    public Attendance getSelectedRowAttendance(){
-            Attendance attendance = new Attendance();
-            int i = attendance_table.getSelectedRow();
-            attendance.setId(attendance_table.getValueAt(i, 0).toString());
-            attendance.setEmpId(attendance_table.getValueAt(i, 1).toString());
-            attendance.setCreatedDate(DateUtils.convertStringToSqlDate(attendance_table.getValueAt(i, 2).toString()));
-            return attendance;
+
+    public Attendance getSelectedRowAttendance() {
+        Attendance attendance = new Attendance();
+        int i = attendance_table.getSelectedRow();
+        attendance.setId(attendance_table.getValueAt(i, 0).toString());
+        attendance.setEmpId(attendance_table.getValueAt(i, 1).toString());
+        attendance.setCreatedDate(DateUtils.convertStringToSqlDate(attendance_table.getValueAt(i, 2).toString()));
+        return attendance;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -343,6 +350,11 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
         });
         jTableAccountList.getTableHeader().setReorderingAllowed(false);
+        jTableAccountList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableAccountListMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(jTableAccountList);
 
         javax.swing.GroupLayout jPanelMaintainAccountLayout = new javax.swing.GroupLayout(jPanelMaintainAccount);
@@ -1234,27 +1246,24 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        if(isSelectedRowAttendanceTable()){
+        if (isSelectedRowAttendanceTable()) {
             Attendance attendance = getSelectedRowAttendance();
             viewDetail = new MaintainAttendanceDetailScreen(attendance);
             viewDetail.setVisible(true);
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng!!");
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        if(!isSelectedRowAttendanceTable()){
+        if (!isSelectedRowAttendanceTable()) {
             JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng!!");
-        }
-        else{
+        } else {
             boolean i = MaintainAttendanceController.gI().deleteAttendance(getSelectedRowAttendanceId());
-            if(!i){
+            if (!i) {
                 JOptionPane.showMessageDialog(rootPane, "error");
-            }
-            else{
-                
+            } else {
+
             }
         }
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -1322,19 +1331,14 @@ public class MaintenanceScreen extends javax.swing.JFrame {
 
     private void jTabbedPaneMaintainScreenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPaneMaintainScreenMouseClicked
         // TODO add your handling code here:
-       /* switch (this.jTabbedPaneMaintainScreen.getSelectedIndex()) {
-            case 0:
-                this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
-                break;
-            case 1:
-                jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
-                break;
-            case 2:
-                jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
-                break;
-            default:
-                break;
-        }*/
+        if (this.jTabbedPaneMaintainScreen.getSelectedIndex() == 0) {
+            this.jTableAccountList.setModel(new AccountTableModel(MaintainAccountController.selectAccountsByBranch(this.branchId)));
+        } else if (this.jTabbedPaneMaintainScreen.getSelectedIndex() == 1) {
+            jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
+        } else if (this.jTabbedPaneMaintainScreen.getSelectedIndex() == 2) {
+            jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+        }
+
     }//GEN-LAST:event_jTabbedPaneMaintainScreenMouseClicked
 
 
@@ -1461,10 +1465,9 @@ public class MaintenanceScreen extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
 
-        if(!isSelectedRowAttendanceTable()){
+        if (!isSelectedRowAttendanceTable()) {
             JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng!!");
-        }
-        else{
+        } else {
             InputDialog inputDialog = new InputDialog("SỬA THÔNG TIN CHẤM CÔNG", 2);
             inputDialog.settingTextField(true, false);
             inputDialog.setVisible(true);
@@ -1489,7 +1492,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton14ActionPerformed
 
-    
+
     private void jButtonUpdateEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateEmpActionPerformed
         // TODO add your handling code here:
         if (!JTableUtil.isARowSelected(this.jTableEmpList)) {
@@ -1722,6 +1725,27 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         String id = parts[0];
         updateAttendanceTable(id);
     }//GEN-LAST:event_empAttendance_tableMouseClicked
+
+    private void jTableAccountListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAccountListMouseClicked
+        // TODO add your handling code here:
+        int selectedRowIndex = this.jTableAccountList.getSelectedRow();
+        if (selectedRowIndex != -1) {
+            String accId = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 0);
+            String userName = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 1);
+            String password = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 2);
+            String accessRight = (String) this.jTableAccountList.getValueAt(selectedRowIndex, 3);
+
+            this.jTextFieldAccId.setEditable(false);
+            this.jTextFieldAccId.setText(accId);
+            this.jTextFieldUserName.setText(userName);
+            this.jTextFieldPassword.setText(password);
+            if (accessRight.equals(this.jRadioButtonAdmin.getText())) {
+                this.jRadioButtonAdmin.setSelected(true);
+            } else {
+                this.jRadioButtonUser.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_jTableAccountListMouseClicked
 
     //utility methods
     private boolean isAccInfoEmpty() {

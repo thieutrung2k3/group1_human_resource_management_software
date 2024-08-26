@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Account;
 import model.Employee;
-
+import util.JFrameUtil;
 
 public class LoginScreen extends javax.swing.JFrame {
 
@@ -15,30 +15,35 @@ public class LoginScreen extends javax.swing.JFrame {
     public static EmployeeScreen employeeScreen;
     private Account account;
     private static LoginScreen instance;
+
     public LoginScreen() {
         initComponents();
         init();
     }
 
-    public static LoginScreen gI(){
-        if(instance == null){
+    public static LoginScreen gI() {
+        if (instance == null) {
             instance = new LoginScreen();
         }
         return instance;
     }
-    
-    public void init(){
+
+    public void init() {
         errLoginMessage.setVisible(false);
     }
-    public Account getAccount(){
+
+    public Account getAccount() {
         return this.account;
     }
-    public void setAccount(Account account){
+
+    public void setAccount(Account account) {
         this.account = account;
     }
-    public boolean isFieldEmpty(){
+
+    public boolean isFieldEmpty() {
         return jPasswordField.getPassword().length == 0 || jTextFieldUserName.getText().isEmpty();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -139,10 +144,9 @@ public class LoginScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        if(!isFieldEmpty()){
+        if (!isFieldEmpty()) {
             account = new Account();
             account.setUserName(jTextFieldUserName.getText());
             char[] pass = jPasswordField.getPassword();
@@ -150,30 +154,25 @@ public class LoginScreen extends javax.swing.JFrame {
             account.setPassword(password);
             boolean result = AccountDAO.isAccountExist(account);
             //JOptionPane.showMessageDialog(rootPane, result + ": " + account.getUserName() + "-"+account.getPassword()+"\n" +  account.getAccessRight());
-            if(result){
+            if (result) {
                 Employee employee = EmployeeDAO.getEmployeeByAccountId(account.getId());
-                if(account.getAccessRight().equals("Admin")){
+                if (account.getAccessRight().equals("Admin")) {
                     administratorScreen = new AdministratorScreen();
                     administratorScreen.setVisible(true);
                     dispose();
-                }
-                else if(account.getAccessRight().equals("User")){
-                    
-                    
+                } else if (account.getAccessRight().equals("User")) {
+
                     employeeScreen = new EmployeeScreen(employee, this.account);
                     employeeScreen.setVisible(true);
                     dispose();
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(rootPane, "Tài khoản chưa được cấp quyền!"
                             + "\nVui lòng liên hệ với người quản trị.");
                 }
-            }
-            else{
+            } else {
                 errLoginMessage.setVisible(true);
             }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "false");
         }
     }//GEN-LAST:event_jButtonLoginActionPerformed
@@ -183,9 +182,9 @@ public class LoginScreen extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the System look and feel */
-        try{
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
