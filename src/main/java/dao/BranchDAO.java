@@ -34,6 +34,29 @@ public class BranchDAO {
         return branches;
     }
     
+    public static List<Branch> getAllBranchesById(String id){
+        List<Branch> branches = new ArrayList<>();
+        String sql = "SELECT * FROM BRANCH WHERE branch_id = ?";
+        try(Connection connection = JDBCutil.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, id);   
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                    while(resultSet.next()){
+                        Branch branch = new Branch();
+                        branch.setId(id);
+                        branch.setName(resultSet.getString("branch_name"));
+                        branch.setAddress(resultSet.getString("branch_address"));
+                        branch.setHotline(resultSet.getString("hotline"));
+                        branch.setEmail(resultSet.getString("email"));
+                        branches.add(branch);
+                }
+                }
+        }catch(SQLException e){
+            System.out.println("error in getAllBranches func: " + e.getMessage());
+        }
+        return branches;
+    }
+    
     public static boolean updateBranch(Branch branch){
         String sql = "UPDATE BRANCH SET branch_name = ?, branch_address = ?, hotline = ?, email = ? "
                + "WHERE branch_id = ?";

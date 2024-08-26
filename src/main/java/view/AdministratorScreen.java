@@ -52,7 +52,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
 
         jLabel28 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        findField = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         name_field = new javax.swing.JTextField();
@@ -82,10 +82,15 @@ public class AdministratorScreen extends javax.swing.JFrame {
         jLabel8.setText("Mã cơ sở:");
         jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        findField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        findField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        findField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findFieldActionPerformed(evt);
+            }
+        });
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton4.setText("THÊM");
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +107,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
         name_field.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         name_field.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton5.setText("SỬA");
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +126,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
         jLabel11.setText("Email:");
         jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton6.setText("XÓA");
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +184,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
         email_field.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         email_field.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton7.setText("TÌM KIẾM");
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +193,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton8.setText("TRUY CẬP");
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -227,17 +232,17 @@ public class AdministratorScreen extends javax.swing.JFrame {
                             .addComponent(phone_field, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                             .addComponent(id_field))
                         .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(61, 61, 61)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(findField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 125, Short.MAX_VALUE)))
+                        .addGap(0, 134, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -251,7 +256,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton4)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(findField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton7)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,8 +264,8 @@ public class AdministratorScreen extends javax.swing.JFrame {
                             .addComponent(jButton8))
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -392,8 +397,20 @@ public class AdministratorScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_branch_tableMouseClicked
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        String id = findField.getText();
+        System.out.println(id);
+        if(id.equals("")){
+            List<Branch> branches = BranchDAO.getAllBranches();
+            updateBranchTable(branches);
+        }else{
+            List<Branch> branches = BranchDAO.getAllBranchesById(id);
+             updateBranchTable(branches);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void findFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findFieldActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -431,6 +448,7 @@ public class AdministratorScreen extends javax.swing.JFrame {
     private javax.swing.JTextField address_field;
     private javax.swing.JTable branch_table;
     private javax.swing.JTextField email_field;
+    private javax.swing.JTextField findField;
     private javax.swing.JTextField id_field;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -444,7 +462,6 @@ public class AdministratorScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField name_field;
     private javax.swing.JTextField phone_field;
     // End of variables declaration//GEN-END:variables

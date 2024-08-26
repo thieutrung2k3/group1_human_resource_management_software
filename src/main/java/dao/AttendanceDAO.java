@@ -170,7 +170,7 @@ public class AttendanceDAO {
             Connection con = JDBCutil.getConnection();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "select attendance_id"
+            String sql = "select *"
                     + " from ATTENDANCE inner join EMPLOYEE"
                     + " on ATTENDANCE.employee_id = EMPLOYEE.employee_id"
                     + " where EMPLOYEE.employee_id = ?;";
@@ -186,6 +186,7 @@ public class AttendanceDAO {
                     String attendanceId = rs.getString("attendance_id");
                     Attendance att = new Attendance();
                     att.setId(attendanceId);
+                    att.setCreatedDate(rs.getDate("created_date"));
                     attList.add(att);
                 }
             }

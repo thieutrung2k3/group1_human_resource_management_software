@@ -12,6 +12,7 @@ import util.*;
 import dao.*;
 import dao.AttendanceDetailDAO;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class AttendanceDetailInputDialog extends javax.swing.JFrame {
@@ -21,6 +22,7 @@ public class AttendanceDetailInputDialog extends javax.swing.JFrame {
     public String attendanceId;
     public AttendanceDetailInputDialog(String title, int type) {
         initComponents();
+              this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.title = title;
         Init();
     }
@@ -173,7 +175,7 @@ public class AttendanceDetailInputDialog extends javax.swing.JFrame {
         java.util.Date selectedDate = dateField.getDate(); // Lấy ngày đã chọn
             if (selectedDate != null) {
                 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy"); 
+                SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy"); 
                 String formattedDate = dateFormat.format(selectedDate);
                 String combinedText = empId + formattedDate;
                 adidField.setText(combinedText);

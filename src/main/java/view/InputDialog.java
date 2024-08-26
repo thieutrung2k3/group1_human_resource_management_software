@@ -18,6 +18,7 @@ import model.Employee;
 import util.*;
 import controller.*;
 import java.awt.FlowLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
@@ -26,13 +27,16 @@ public class InputDialog extends javax.swing.JFrame {
     private boolean isInitializing = true;
     private static InputDialog instance;
     private MaintainAttendanceController maintainAttendanceController;
-    public int type = 0;
     private String title;
     public String getIdFromSR;
-    public InputDialog(String title, int type) {
+    public String empId;
+    public MaintenanceScreen view;
+    public InputDialog(String title, String empId, MaintenanceScreen view) {
         initComponents();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.title = title;
-        this.type = type;
+        this.empId = empId;
+        this.view = view;
         init();
     }
     public InputDialog(){
@@ -47,17 +51,8 @@ public class InputDialog extends javax.swing.JFrame {
     }
     
     private void init(){
-        attendanceIdField.setEditable(false);
-        createDateField.setText(DateUtils.formatDateToString(LocalDate.now(), "dd-MM-yyyy"));
-        
-        HashMap<String, String> employees = EmployeeDAO.gI().getEmployeeIdAndName();
-        for(Map.Entry<String, String> entry : employees.entrySet()){
-            String item = entry.getKey() + "-" + entry.getValue();
-            empComboBox.addItem(item);
-        }
-        empComboBox.setSelectedIndex(-1);
         titleLabel.setText(title);
-        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        createDateField.setText(DateUtils.formatDateToString(LocalDate.now(), "dd-MM-yyyy"));
         isInitializing = false;
     }
     
@@ -68,13 +63,13 @@ public class InputDialog extends javax.swing.JFrame {
         createDateField.setFocusable(createdDate);
     }
     
-    public void setAttendanceIdField(){
+    /*public void setAttendanceIdField(){
         String line = empComboBox.getSelectedItem().toString();
         String[] parts = line.split("-");
         attendanceIdField.setText(parts[0] 
                 + DateUtils.formatDateToString(LocalDate.now(), "MMyy") 
                 + AttendanceDAO.gI().getAttendanceCountForEmployeeOnDate(parts[0], LocalDate.now().toString()));
-    }
+    }*/
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,12 +82,11 @@ public class InputDialog extends javax.swing.JFrame {
 
         titleLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        attendanceIdField = new javax.swing.JTextField();
-        empComboBox = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         createDateField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        attendanceIdField = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,27 +95,6 @@ public class InputDialog extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         jLabel2.setText("Mã chấm công: ");
-
-        attendanceIdField.setFocusable(false);
-        attendanceIdField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                attendanceIdFieldActionPerformed(evt);
-            }
-        });
-
-        empComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                empComboBoxItemStateChanged(evt);
-            }
-        });
-        empComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empComboBoxActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jLabel3.setText("Xin vui lòng chọn một nhân viên, các dữ liệu còn lại sẽ được tạo tự động.");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         jLabel4.setText("Ngày tạo:");
@@ -140,83 +113,71 @@ public class InputDialog extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Quay về");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(empComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(attendanceIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(createDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(45, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(attendanceIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(createDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(titleLabel)
-                .addGap(18, 18, 18)
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(attendanceIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(createDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(empComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(createDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attendanceIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void attendanceIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceIdFieldActionPerformed
-
-    }//GEN-LAST:event_attendanceIdFieldActionPerformed
-
     private void createDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDateFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_createDateFieldActionPerformed
 
-    private void empComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empComboBoxActionPerformed
-        if(!isInitializing){
-            setAttendanceIdField();
-        }
-    }//GEN-LAST:event_empComboBoxActionPerformed
-
-    private void empComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_empComboBoxItemStateChanged
-        
-    }//GEN-LAST:event_empComboBoxItemStateChanged
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!attendanceIdField.getText().isEmpty() && !createDateField.getText().isEmpty()) {
             Attendance attendance = new Attendance();
-            String line = empComboBox.getSelectedItem().toString();
-            String[] parts = line.split("-");
-            attendance.setEmpId(parts[0]);
             attendance.setId(attendanceIdField.getText());
+            attendance.setEmpId(empId);
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 // Chuyển từ String thành java.util.Date
@@ -231,28 +192,23 @@ public class InputDialog extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
-            if(type == 1){
-                if(!AttendanceDAO.gI().hasSingleAttendanceForMonth(attendance.getEmpId(), LocalDate.now())){
+           
+            if(!AttendanceDAO.gI().hasSingleAttendanceForMonth(attendance.getEmpId(), LocalDate.now())){
                     AttendanceDAO.gI().addAttendance(attendance);
+                    view.updateAttendanceTable(empId);
                   //  MaintainAttendanceController.gI().loadAttendanceData(LoginScreen.maintenanceScreen);
                     dispose();
-                }
-                else{
-                    JOptionPane.showMessageDialog(rootPane, "Nhân viên này đã có 1 bảng chấm công trong tháng!");
-                }
             }
-            else if(type == 2){
-                int i = AttendanceDAO.gI().updateAttendance(attendance, getIdFromSR);
-                System.out.println(getIdFromSR + "-" + i + "-" + attendance.getId() + "=" + attendance.getEmpId() + "=" + attendance.getCreatedDate());
-                
-                 //   MaintainAttendanceController.gI().loadAttendanceData(LoginScreen.maintenanceScreen);
-                    dispose();
-                
-            }
-            
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Nhân viên này đã có 1 bảng chấm công trong tháng!");
+            }      
       }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,10 +248,9 @@ public class InputDialog extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField attendanceIdField;
     private javax.swing.JTextField createDateField;
-    private javax.swing.JComboBox<String> empComboBox;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables

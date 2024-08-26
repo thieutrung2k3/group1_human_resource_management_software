@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
@@ -41,6 +43,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     public MaintenanceScreen(String branchId) {
         this.branchId = branchId;
         initComponents();
+                      this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.jTextFieldAccId.requestFocus();
         this.jDateChooserEmpDob.getDateEditor().setEnabled(false);
         this.jDateChooserEmpDob.setDate(new Date(new java.util.Date().getTime()));
@@ -67,6 +70,8 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
         jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
         updateEmpInSalary();
+        updateAttendanceTable("");
+        updateSalaryTable("");
     }
 
     public static MaintenanceScreen gI() {
@@ -131,7 +136,15 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         }
         return id;
     }
-
+    public String getEmployeeIdInTable(JTable jtable){
+        int sr = jtable.getSelectedRow();
+        if(sr != -1){
+            String line = jtable.getValueAt(sr, 0).toString();
+            String[] parts = line.split("-");
+            return parts[0];
+        }
+        return "";
+    }
     public boolean isSelectedRowAttendanceTable() {
         int sr = attendance_table.getSelectedRow();
         return (sr != -1);
@@ -141,8 +154,8 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         Attendance attendance = new Attendance();
         int i = attendance_table.getSelectedRow();
         attendance.setId(attendance_table.getValueAt(i, 0).toString());
-        attendance.setEmpId(attendance_table.getValueAt(i, 1).toString());
-        attendance.setCreatedDate(DateUtils.convertStringToSqlDate(attendance_table.getValueAt(i, 2).toString()));
+        attendance.setEmpId(getEmployeeIdInTable(empAttendance_table));
+        attendance.setCreatedDate(DateUtils.convertStringToSqlDate(attendance_table.getValueAt(i, 1).toString()));
         return attendance;
     }
 
@@ -222,12 +235,10 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         attendance_table = new javax.swing.JTable();
         jButton13 = new javax.swing.JButton();
-        countLabel = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         empAttendance_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -364,51 +375,50 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                 .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelAccountId)
+                            .addComponent(jLabelPassword)
+                            .addComponent(jLabelAccessRight)
+                            .addComponent(jLabelUserName))
                         .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                .addGap(334, 334, 334)
-                                .addComponent(jLabelAdminTitle))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                                        .addComponent(jRadioButtonAdmin)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jRadioButtonUser))))
                             .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelAccountId)
-                                    .addComponent(jLabelPassword)
-                                    .addComponent(jLabelAccessRight)
-                                    .addComponent(jLabelUserName))
-                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                                .addComponent(jRadioButtonAdmin)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jRadioButtonUser))))
-                                    .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMaintainAccountLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(51, 51, 51)
-                                .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonDeleteAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonAddAccount))
-                                .addGap(33, 33, 33)
-                                .addComponent(jButtonInputNewAccount)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMaintainAccountLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonUpdateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonDeleteAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAddAccount))
+                        .addGap(33, 33, 33)
+                        .addComponent(jButtonInputNewAccount)
                         .addGap(0, 502, Short.MAX_VALUE))
                     .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane6)))
                 .addContainerGap())
+            .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
+                .addGap(400, 400, 400)
+                .addComponent(jLabelAdminTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelMaintainAccountLayout.setVerticalGroup(
             jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(jLabelAdminTitle)
-                .addGap(2, 2, 2)
+                .addGap(11, 11, 11)
                 .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMaintainAccountLayout.createSequentialGroup()
                         .addGroup(jPanelMaintainAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -608,25 +618,22 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                             .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
                                 .addComponent(jTextFieldEmpId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(21, 21, 21)
+                                .addComponent(jLabel14)
+                                .addGap(63, 63, 63)
                                 .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
+                                    .addComponent(jTextFieldEmpEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldEmpPhoneNo)
                                     .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
-                                        .addComponent(jLabel14)
-                                        .addGap(63, 63, 63)
                                         .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldEmpEmail)
-                                            .addComponent(jTextFieldEmpPhoneNo)
-                                            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
-                                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jComboBoxEmpPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jTextFieldJPanelMaintainEmployeeAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jTextFieldJPanelMaintainEmployeeBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(2, 2, 2)))
-                                        .addGap(29, 29, 29)
-                                        .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButtonUpdateEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButtonAddEmp, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButtonDelEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(jComboBoxEmpPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextFieldJPanelMaintainEmployeeAccId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextFieldJPanelMaintainEmployeeBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(2, 2, 2)))
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonUpdateEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonAddEmp, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonDelEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
                                 .addComponent(jTextFieldEmpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -647,14 +654,18 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                                 .addComponent(jLabel18)))
                         .addGap(18, 18, 18)
                         .addComponent(jButtonInputNewEmp)
-                        .addContainerGap(263, Short.MAX_VALUE))))
+                        .addContainerGap(264, Short.MAX_VALUE))))
+            .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
+                .addGap(400, 400, 400)
+                .addComponent(jLabel7)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelMaintainEmployeeLayout.setVerticalGroup(
             jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel7)
-                .addGap(2, 2, 2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMaintainEmployeeLayout.createSequentialGroup()
                         .addGroup(jPanelMaintainEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -839,12 +850,9 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jTextFieldSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                                        .addComponent(jLabel26)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldMaintainSaleBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldMaintainSaleBranchId, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -866,16 +874,21 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 .addComponent(jButtonInputNewSale)
                 .addGap(244, 244, 244))
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1084, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1084, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(400, 400, 400)
+                        .addComponent(jLabel21)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(jLabel21)
-                .addGap(5, 5, 5)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(88, 88, 88)
@@ -941,7 +954,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jLabel28.setText("QUẢN TRỊ VIÊN");
         jLabel28.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jButton10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton10.setText("XÓA");
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -950,18 +963,10 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
         });
 
-        jButton11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton11.setText("SỬA");
-        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton12.setText("THÊM");
         jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton12.setMaximumSize(new java.awt.Dimension(80, 30));
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton12ActionPerformed(evt);
@@ -995,12 +1000,16 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             attendance_table.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jButton13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton13.setText("CHI TIẾT");
         jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
-        countLabel.setText("Count: ");
-
+        empAttendance_table.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         empAttendance_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -1031,46 +1040,39 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(336, 336, 336)
-                        .addComponent(jLabel28)
-                        .addGap(186, 186, 186)
-                        .addComponent(countLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton12)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton13)))
-                .addContainerGap(285, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton13))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(400, 400, 400)
+                        .addComponent(jLabel28)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel28)
-                    .addComponent(countLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton12)
-                    .addComponent(jButton11)
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10)
                     .addComponent(jButton13))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1111,7 +1113,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             salary_table.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        jButton14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton14.setText("XUẤT EXCEL");
         jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -1120,9 +1122,14 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             }
         });
 
-        jButton16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton16.setText("TÍNH LƯƠNG");
         jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
 
         empSalary_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1164,7 +1171,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(415, 415, 415)
+                                .addGap(400, 400, 400)
                                 .addComponent(jLabel29))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
@@ -1186,7 +1193,7 @@ public class MaintenanceScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1241,11 +1248,12 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        viewSalary = new SalaryCalculationScreen();
+        viewSalary = new SalaryCalculationScreen(this, getEmployeeIdInTable(empSalary_table));
         viewSalary.setVisible(true);
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+
         if (isSelectedRowAttendanceTable()) {
             Attendance attendance = getSelectedRowAttendance();
             viewDetail = new MaintainAttendanceDetailScreen(attendance);
@@ -1259,11 +1267,15 @@ public class MaintenanceScreen extends javax.swing.JFrame {
         if (!isSelectedRowAttendanceTable()) {
             JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng!!");
         } else {
-            boolean i = MaintainAttendanceController.gI().deleteAttendance(getSelectedRowAttendanceId());
-            if (!i) {
-                JOptionPane.showMessageDialog(rootPane, "error");
-            } else {
-
+            int op = JOptionPane.showConfirmDialog(rootPane, "Xác nhận xóa.");
+            if(op == JOptionPane.YES_OPTION){
+                boolean i = MaintainAttendanceController.gI().deleteAttendance(getSelectedRowAttendanceId());
+                if (!i) {
+                    JOptionPane.showMessageDialog(rootPane, "error");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Xóa thành công.");
+                }
+                updateAttendanceTable(getEmployeeIdInTable(empAttendance_table));
             }
         }
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -1337,6 +1349,17 @@ public class MaintenanceScreen extends javax.swing.JFrame {
             jTableEmpList.setModel(new EmployeeTableModel(MaintainEmployeeController.selectEmpsByBranch(this.branchId)));
         } else if (this.jTabbedPaneMaintainScreen.getSelectedIndex() == 2) {
             jTableSaleList.setModel(new SaleTableModel(MaintainSaleController.selectSaleByBranch(this.branchId)));
+        }else if (this.jTabbedPaneMaintainScreen.getSelectedIndex() == 5) {
+            new AdministratorScreen().setVisible(true);
+            dispose();
+        }else if (this.jTabbedPaneMaintainScreen.getSelectedIndex() == 6) {
+            int op = JOptionPane.showConfirmDialog(rootPane, "Bạn có muốn thoát?");
+            if(op == JOptionPane.YES_OPTION){
+                new LoginScreen().setVisible(true);
+                dispose();
+            }else{
+                this.jTabbedPaneMaintainScreen.setSelectedIndex(0);
+            }
         }
 
     }//GEN-LAST:event_jTabbedPaneMaintainScreenMouseClicked
@@ -1458,37 +1481,32 @@ public class MaintenanceScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonInputNewAccountActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        InputDialog inputDialog = new InputDialog("NHẬP THÔNG TIN CHẤM CÔNG", 1);
+        String empId = getEmployeeIdInTable(empAttendance_table);
+        InputDialog inputDialog = new InputDialog("NHẬP THÔNG TIN CHẤM CÔNG", empId, this);
         inputDialog.setVisible(true);
-        inputDialog.settingTextField(false, false);
+        inputDialog.settingTextField(true, false);
     }//GEN-LAST:event_jButton12ActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-
-        if (!isSelectedRowAttendanceTable()) {
-            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng!!");
-        } else {
-            InputDialog inputDialog = new InputDialog("SỬA THÔNG TIN CHẤM CÔNG", 2);
-            inputDialog.settingTextField(true, false);
-            inputDialog.setVisible(true);
-            inputDialog.getIdFromSR = getSelectedRowAttendanceId();
-        }
-    }//GEN-LAST:event_jButton11ActionPerformed
-
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Save Excel File");
-        fileChooser.setSelectedFile(new File("exported_data.xlsx")); // Đặt tên mặc định cho file
-        List<Salary> salaries = SalaryDAO.getAllSalaries();
-        // Hiển thị hộp thoại lưu file
-        int userSelection = fileChooser.showSaveDialog(null);
+        int sr = empSalary_table.getSelectedRow();
+        if(sr != -1){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Save Excel File");
+            fileChooser.setSelectedFile(new File("exported_data.xlsx")); // Đặt tên mặc định cho file
+            List<Salary> salaries = SalaryDAO.getAllSalariesByEmpId(getEmployeeIdInTable(empSalary_table));
+            // Hiển thị hộp thoại lưu file
+            int userSelection = fileChooser.showSaveDialog(null);
 
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-
-            // Gọi hàm xuất dữ liệu vào file Excel
-            SalaryDAO.exportSalariesToExcel(salaries, fileToSave.getAbsolutePath());
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                JOptionPane.showMessageDialog(rootPane, "Save as file: " + fileToSave.getAbsolutePath());
+                // Gọi hàm xuất dữ liệu vào file Excel
+                SalaryDAO.exportSalariesToExcel(salaries, fileToSave.getAbsolutePath());
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn 1 dòng!");
         }
     }//GEN-LAST:event_jButton14ActionPerformed
 
@@ -1813,11 +1831,9 @@ public class MaintenanceScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable attendance_table;
-    private javax.swing.JLabel countLabel;
     private javax.swing.JTable empAttendance_table;
     private javax.swing.JTable empSalary_table;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
